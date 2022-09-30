@@ -9,12 +9,52 @@ i18next.addResourceBundle('ar', 'navigation', ar);
 
 const navigationConfig = [
   {
-    id: 'example-component',
-    title: 'Example',
-    translate: 'EXAMPLE',
+    id: 'dashboards.project',
+    title: 'Dashboard',
     type: 'item',
-    icon: 'heroicons-outline:star',
-    url: 'example',
+    icon: 'heroicons-outline:clipboard-check',
+    url: '/dashboards',
+  },
+  {
+    id: 'apps.calendar',
+    title: 'Calendar',
+    subtitle: '3 upcoming events',
+    type: 'item',
+    icon: 'heroicons-outline:calendar',
+    url: '/calendar',
+    translate: 'CALENDAR',
+  },
+  {
+    id: 'apps.scrumboard',
+    title: 'Scrumboard',
+    type: 'item',
+    icon: 'heroicons-outline:view-boards',
+    url: '/scrumboard',
+    translate: 'SCRUMBOARD',
+  },
+  {
+    id: 'apps.tasks',
+    title: 'Tasks',
+    subtitle: '12 remaining tasks',
+    type: 'item',
+    icon: 'heroicons-outline:check-circle',
+    url: '/tasks',
+    translate: 'TASKS',
+  },
+  {
+    id: 'apps.contacts',
+    title: 'Contacts',
+    type: 'item',
+    icon: 'heroicons-outline:user-group',
+    url: '/contacts',
+    translate: 'CONTACTS',
+  },
+  {
+    id: 'apps.profile',
+    title: 'Profile',
+    type: 'item',
+    icon: 'heroicons-outline:user-circle',
+    url: '/profile',
   },
 ];
 
