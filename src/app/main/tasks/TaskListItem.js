@@ -25,7 +25,7 @@ function TaskListItem(props) {
             sx={{ bgcolor: 'background.paper' }}
             button
             component={NavLinkAdapter}
-            to={`/apps/tasks/${data.id}`}
+            to={`/tasks/${data.id}`}
             ref={provided.innerRef}
             {...provided.draggableProps}
           >

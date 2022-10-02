@@ -152,3 +152,7 @@ input:-webkit-autofill:active
 .fc-scrollgrid-section-liquid {
     height: 1px !important;
 }
+
+.muiltr-b10jnn .container {
+    max-width: 100%;
+}

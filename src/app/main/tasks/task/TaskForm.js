@@ -79,7 +79,7 @@ const TaskForm = (props) => {
 
   function onSubmitNew(data) {
     dispatch(addTask(data)).then(({ payload }) => {
-      navigate(`/apps/tasks/${payload.id}`);
+      navigate(`/tasks/${payload.id}`);
     });
   }
 
@@ -107,7 +107,7 @@ const TaskForm = (props) => {
           />
           <div className="flex items-center">
             {routeParams.id !== 'new' && <FormActionsMenu taskId={task.id} />}
-            <IconButton className="" component={NavLinkAdapter} to="/apps/tasks" size="large">
+            <IconButton className="" component={NavLinkAdapter} to="/tasks" size="large">
               <FuseSvgIcon>heroicons-outline:x</FuseSvgIcon>
             </IconButton>
           </div>

@@ -16,7 +16,7 @@ function SectionListItem(props) {
             sx={{ bgcolor: 'background.default' }}
             button
             component={NavLinkAdapter}
-            to={`/apps/tasks/${data.id}`}
+            to={`/tasks/${data.id}`}
             ref={provided.innerRef}
             {...provided.draggableProps}
           >
