@@ -19,7 +19,7 @@ function BoardItem(props) {
   return (
     <Card
       component={Link}
-      to={board.id}
+      to={`/scrumboard/aplikasi/${board.id}`}
       role="button"
       className="flex flex-col items-start w-full h-full p-24 rounded-lg shadow rounded-lg hover:shadow-xl transition-shadow duration-150 ease-in-out"
     >
