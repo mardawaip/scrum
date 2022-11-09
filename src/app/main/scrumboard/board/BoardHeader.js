@@ -4,7 +4,8 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import BoardTitle from './BoardTitle';
 import AppsIcon from '@mui/icons-material/Apps';
 
-function BoardHeader({ boardId }) {
+function BoardHeader(props) {
+  const { boardId } = props;
   const location = window.location.pathname.split('/')[2];
   
   return (

@@ -6,6 +6,7 @@ import cards from './cardsSlice';
 import lists from './listsSlice';
 import labels from './labelsSlice';
 import members from './membersSlice';
+import aplikasi from './aplikasi';
 
 const scrumboardAppReducers = combineReducers({
   boards,
@@ -15,6 +16,7 @@ const scrumboardAppReducers = combineReducers({
   lists,
   labels,
   members,
+  aplikasi
 });
 
 export default scrumboardAppReducers;

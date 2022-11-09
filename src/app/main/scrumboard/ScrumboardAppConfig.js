@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
+import Aplikasi from './aplikasi/aplikasi';
 import ScrumboardApp from './ScrumboardApp';
 
 const Board = lazy(() => import('./board/Board'));
@@ -28,7 +29,7 @@ const ScrumboardAppConfig = {
         },
         {
           path: 'aplikasi/:boardId',
-          element: <Board />,
+          element: <Aplikasi />,
         },
       ],
     },
