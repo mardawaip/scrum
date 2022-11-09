@@ -18,7 +18,7 @@ const marks = [
 
 function AdjustFontSize(props) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [fontSize, setFontSize] = useState(1);
+  const [fontSize, setFontSize] = useState(0.9);
 
   function changeHtmlFontSize() {
     const html = document.getElementsByTagName('html')[0];
@@ -34,7 +34,7 @@ function AdjustFontSize(props) {
   };
 
   return (
-    <div>
+    <div style={{ display: 'none' }}>
       <IconButton
         className={clsx('w-40 h-40', props.className)}
         aria-controls="font-size-menu"

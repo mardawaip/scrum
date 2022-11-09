@@ -15,7 +15,7 @@ export const getBoard = createAsyncThunk(
   'scrumboardApp/board/get',
   async (boardId, { dispatch }) => {
     try {
-      const response = await axios.get(`/api/scrumboard/boards/${boardId}`);
+      const response = await axios.get(`/api/scrum/getScrum/${boardId}`);
       const data = await response.data;
       return data;
     } catch (error) {
@@ -31,7 +31,7 @@ export const getBoard = createAsyncThunk(
       );
 
       history.push({
-        pathname: '/apps/scrumboard/boards',
+        pathname: '/scrumboard/boards',
       });
       return null;
     }
@@ -46,7 +46,7 @@ export const updateBoard = createAsyncThunk(
   async (newData, { dispatch, getState }) => {
     const { board } = getState().scrumboardApp;
 
-    const response = await axios.put(`/api/scrumboard/boards/${board.id}`, newData);
+    const response = await axios.put(`/api/scrum/updateScrum/${board.id}`, newData);
 
     const data = await response.data;
 

@@ -68,7 +68,7 @@ function Board(props) {
   return (
     <>
       <FusePageSimple
-        header={<BoardHeader onSetSidebarOpen={setSidebarOpen} />}
+        header={<BoardHeader onSetSidebarOpen={setSidebarOpen} boardId={routeParams.boardId} />}
         content={
           <>
             {board?.lists && (

@@ -28,18 +28,18 @@ function BoardSettingsSidebar(props) {
 
   const boardSettingsForm = watch();
 
-  const updateBoardData = useDebounce((data) => {
-    dispatch(updateBoard(data));
-  }, 600);
+  // const updateBoardData = useDebounce((data) => {
+  //   dispatch(updateBoard(data));
+  // }, 600);
 
-  useDeepCompareEffect(() => {
-    if (_.isEmpty(boardSettingsForm) || !board?.settings) {
-      return;
-    }
-    if (!_.isEqual(board.settings, boardSettingsForm)) {
-      updateBoardData({ settings: boardSettingsForm });
-    }
-  }, [board, boardSettingsForm, updateBoardData]);
+  // useDeepCompareEffect(() => {
+  //   if (_.isEmpty(boardSettingsForm) || !board?.settings) {
+  //     return;
+  //   }
+  //   if (!_.isEqual(board.settings, boardSettingsForm)) {
+  //     updateBoardData({ settings: boardSettingsForm });
+  //   }
+  // }, [board, boardSettingsForm, updateBoardData]);
 
   useEffect(() => {
     if (!board) {

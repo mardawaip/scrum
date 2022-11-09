@@ -14,7 +14,7 @@ import { selectMembers } from '../store/membersSlice';
 function BoardItem(props) {
   const { board } = props;
   const members = useSelector(selectMembers);
-  const boardMembers = board.members.map((id) => _.find(members, { id }));
+  const boardMembers = []; //board.members.map((id) => _.find(members, { id }));
 
   return (
     <Card
@@ -31,12 +31,18 @@ function BoardItem(props) {
           }}
           className="flex items-center justify-center p-16 rounded-full"
         >
-          <FuseSvgIcon>{board.icon}</FuseSvgIcon>
+          {
+            board.logo ? (
+              <Avatar alt={board.logo} src={board.logo}/>
+            ): (
+              <FuseSvgIcon>heroicons-outline:template</FuseSvgIcon>
+            )
+          }
         </Box>
 
         <Typography className="mt-20 text-lg font-medium leading-5">{board.title}</Typography>
 
-        <Typography className="mt-2 line-clamp-2 text-secondary">{board.description}</Typography>
+        <Typography className="mt-2 line-clamp-2 text-secondary">{board.deskripsi}</Typography>
 
         <Divider className="w-48 mt-24 h-2" />
       </div>
@@ -57,7 +63,7 @@ function BoardItem(props) {
         <div className="flex items-center mt-24 text-md font-md">
           <Typography color="text.secondary">Edited:</Typography>
           <Typography className="mx-4 truncate">
-            {formatDistance(new Date(board.lastActivity), new Date(), { addSuffix: true })}
+            {formatDistance(new Date(board.created_at), new Date(), { addSuffix: true })}
           </Typography>
         </div>
       </div>

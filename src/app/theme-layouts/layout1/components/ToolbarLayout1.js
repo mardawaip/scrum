@@ -37,7 +37,7 @@ function ToolbarLayout1(props) {
         }}
         position="static"
       >
-        <Toolbar className="p-0 min-h-48 md:min-h-64">
+        <Toolbar className="p-0 min-h-48 md:min-h-48">
           <div className="flex flex-1 px-16">
             {config.navbar.display && config.navbar.position === 'left' && (
               <>
@@ -58,13 +58,13 @@ function ToolbarLayout1(props) {
               </>
             )}
 
-            <Hidden lgDown>
+            {/* <Hidden lgDown>
               <NavigationShortcuts />
-            </Hidden>
+            </Hidden> */}
           </div>
 
           <div className="flex items-center px-8 h-full overflow-x-auto">
-            <LanguageSwitcher />
+            {/* <LanguageSwitcher /> */}
 
             <AdjustFontSize />
 

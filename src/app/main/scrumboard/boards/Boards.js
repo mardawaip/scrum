@@ -34,7 +34,7 @@ function Boards(props) {
     <div className="flex grow shrink-0 flex-col items-center container p-24 sm:p-40">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
         <Typography className="mt-16 md:mt-96 text-3xl md:text-6xl font-extrabold tracking-tight leading-7 sm:leading-10 text-center">
-          Scrumboard Boards
+          Scrumboard Boards Aplikasi
         </Typography>
       </motion.div>
 

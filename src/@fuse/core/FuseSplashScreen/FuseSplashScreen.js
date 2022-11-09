@@ -1,11 +1,12 @@
 import { memo } from 'react';
 import Box from '@mui/material/Box';
+import AppConfig from 'app/configs/AppConfig';
 
 function FuseSplashScreen() {
   return (
     <div id="fuse-splash-screen">
       <div className="logo">
-        <img width="128" src="assets/images/logo/logo.svg" alt="logo" />
+        <img width="128" src={AppConfig.logo} alt="logo" />
       </div>
       <Box
         id="spinner"

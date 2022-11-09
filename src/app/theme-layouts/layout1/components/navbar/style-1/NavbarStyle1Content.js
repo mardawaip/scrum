@@ -6,6 +6,7 @@ import Logo from '../../../../shared-components/Logo';
 import NavbarToggleButton from '../../../../shared-components/NavbarToggleButton';
 import UserNavbarHeader from '../../../../shared-components/UserNavbarHeader';
 import Navigation from '../../../../shared-components/Navigation';
+import AppConfig from 'app/configs/AppConfig';
 
 const Root = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -35,7 +36,7 @@ const StyledContent = styled(FuseScrollbars)(({ theme }) => ({
 function NavbarStyle1Content(props) {
   return (
     <Root className={clsx('flex flex-auto flex-col overflow-hidden h-full', props.className)}>
-      <div className="flex flex-row items-center shrink-0 h-48 md:h-72 px-20">
+      <div className="flex flex-row items-center shrink-0 h-48 md:h-48 px-20">
         <div className="flex flex-1 mx-4">
           <Logo />
         </div>
@@ -52,7 +53,7 @@ function NavbarStyle1Content(props) {
         <Navigation layout="vertical" />
 
         <div className="flex flex-0 items-center justify-center py-48 opacity-10">
-          <img className="w-full max-w-64" src="assets/images/logo/logo.svg" alt="footer logo" />
+          <img className="w-full max-w-64" src={AppConfig.logo} alt="footer logo" />
         </div>
       </StyledContent>
     </Root>

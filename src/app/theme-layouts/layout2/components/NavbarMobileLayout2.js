@@ -6,6 +6,7 @@ import UserNavbarHeader from '../../shared-components/UserNavbarHeader';
 import NavbarToggleButton from '../../shared-components/NavbarToggleButton';
 import Logo from '../../shared-components/Logo';
 import Navigation from '../../shared-components/Navigation';
+import AppConfig from 'app/configs/AppConfig';
 
 const Root = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -53,7 +54,7 @@ function NavbarMobileLayout2(props) {
         <Navigation layout="vertical" />
 
         <div className="flex flex-0 items-center justify-center py-48 opacity-10">
-          <img className="w-full max-w-64" src="assets/images/logo/logo.svg" alt="footer logo" />
+          <img className="w-full max-w-64" src={AppConfig.logo} alt="footer logo" />
         </div>
       </StyledContent>
     </Root>
