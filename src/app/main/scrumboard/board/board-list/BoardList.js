@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import BoardAddCard from '../board-card/BoardAddCard';
 import BoardCard from '../board-card/BoardCard';
 import BoardListHeader from './BoardListHeader';
-import { selectListById } from '../../store/listsSlice';
+// import { selectListById } from '../../store/listsSlice';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   transitionProperty: 'box-shadow',
@@ -19,7 +19,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 function BoardList(props) {
   const { listId, cardIds } = props;
   const contentScrollEl = useRef(null);
-  const list = useSelector((state) => selectListById(state, listId));
+  const list = []; //useSelector((state) => selectListById(state, listId));
 
   function handleCardAdded() {
     contentScrollEl.current.scrollTop = contentScrollEl.current.scrollHeight;

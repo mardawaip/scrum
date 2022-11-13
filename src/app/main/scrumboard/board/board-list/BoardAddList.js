@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { newList } from '../../store/listsSlice';
+// import { newList } from '../../store/listsSlice';
 
 const defaultValues = {
   title: '',
@@ -55,7 +55,7 @@ function BoardAddList(props) {
   }
 
   function onSubmit(data) {
-    dispatch(newList(data));
+    // dispatch(newList(data));
     handleCloseForm();
   }
 

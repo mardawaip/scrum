@@ -15,7 +15,7 @@ import _ from '@lodash';
 import { useDebounce, useDeepCompareEffect } from '@fuse/hooks';
 import { lighten } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { deleteBoard, selectBoard, updateBoard } from '../../../store/boardSlice';
+// import { deleteBoard, selectBoard, updateBoard } from '../../../store/boardSlice';
 
 function BoardSettingsSidebar(props) {
   const dispatch = useDispatch();

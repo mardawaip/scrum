@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import { useSelector } from 'react-redux';
 import _ from '@lodash';
-import { selectMembers } from '../store/membersSlice';
+// import { selectMembers } from '../store/membersSlice';
 
 function BoardItem(props) {
   const { board } = props;

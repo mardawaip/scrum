@@ -5,7 +5,7 @@ import fromUnixTime from 'date-fns/fromUnixTime';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
-import { selectMemberById } from '../../../../store/membersSlice';
+// import { selectMemberById } from '../../../../store/membersSlice';
 
 function CardActivity(props) {
   const user = useSelector((state) => selectMemberById(state, props.item.idMember));

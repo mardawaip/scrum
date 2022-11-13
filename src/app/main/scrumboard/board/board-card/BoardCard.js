@@ -9,13 +9,13 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AvatarGroup } from '@mui/material';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { openCardDialog } from '../../store/cardSlice';
-import { selectCardById } from '../../store/cardsSlice';
+// import { openCardDialog } from '../../store/dataSlice';
+// import { selectCardById } from '../../store/dataSlice';
 import BoardCardLabel from './BoardCardLabel';
-import { selectMembers } from '../../store/membersSlice';
+// import { selectMembers } from '../../store/dataSlice';
 import BoardCardDueDate from './BoardCardDueDate';
 import BoardCardCheckItems from './BoardCardCheckItems';
-import { selectBoard } from '../../store/boardSlice';
+// import { selectBoard } from '../../store/dataSlice';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   transitionProperty: 'box-shadow',
@@ -26,15 +26,15 @@ const StyledCard = styled(Card)(({ theme }) => ({
 function BoardCard(props) {
   const { cardId, index } = props;
   const dispatch = useDispatch();
-  const board = useSelector(selectBoard);
-  const card = useSelector((state) => selectCardById(state, cardId));
-  const members = useSelector(selectMembers);
+  // const board = useSelector(selectBoard);
+  // const card = useSelector((state) => selectCardById(state, cardId));
+  // const members = useSelector(selectMembers);
   const commentsCount = getCommentsCount(card);
   const cardCoverImage = _.find(card.attachments, { id: card.attachmentCoverId });
 
   function handleCardClick(ev, _card) {
     ev.preventDefault();
-    dispatch(openCardDialog(_card));
+    // dispatch(openCardDialog(_card));
   }
 
   function getCommentsCount(_card) {

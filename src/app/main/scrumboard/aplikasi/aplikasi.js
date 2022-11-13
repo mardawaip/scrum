@@ -6,11 +6,10 @@ import { useParams } from "react-router-dom";
 import withRouter from '@fuse/core/withRouter';
 import reducer from '../store';
 import { styled } from '@mui/material/styles';
-import { getDetailAplikasi } from "../store/aplikasi";
+import { getDetailAplikasi } from "../store/dataSlice";
 import withReducer from "app/store/withReducer";
 import AplikasiHeader from './aplikasiHeader';
-import { getBoard } from "../store/boardSlice";
-import BoardSettingsSidebar from "../board/sidebars/settings/BoardSettingsSidebar";
+import { getBoard } from "../store/dataSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
     '& .FusePageSimple-header': {

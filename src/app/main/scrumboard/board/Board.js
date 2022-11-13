@@ -8,32 +8,32 @@ import { useDeepCompareEffect } from '@fuse/hooks';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import reducer from '../store';
-import { getBoard, reorderCard, reorderList, resetBoard, selectBoard } from '../store/boardSlice';
+// import { getBoard, reorderCard, reorderList, resetBoard, selectBoard } from '../store/dataSlice';
 import BoardAddList from './board-list/BoardAddList';
 import BoardList from './board-list/BoardList';
 import BoardCardDialog from './dialogs/card/BoardCardDialog';
 import BoardSettingsSidebar from './sidebars/settings/BoardSettingsSidebar';
-import { getCards } from '../store/cardsSlice';
-import { getLists } from '../store/listsSlice';
-import { getLabels } from '../store/labelsSlice';
+// import { getCards } from '../store/dataSlice';
+// import { getLists } from '../store/dataSlice';
+// import { getLabels } from '../store/dataSlice';
 import BoardHeader from './BoardHeader';
 
 function Board(props) {
   const dispatch = useDispatch();
-  const board = useSelector(selectBoard);
+  // const board = useSelector(selectBoard);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const routeParams = useParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useDeepCompareEffect(() => {
-    dispatch(getBoard(routeParams.boardId));
-    dispatch(getCards(routeParams.boardId));
-    dispatch(getLists(routeParams.boardId));
-    dispatch(getLabels(routeParams.boardId));
+    // dispatch(getBoard(routeParams.boardId));
+    // dispatch(getCards(routeParams.boardId));
+    // dispatch(getLists(routeParams.boardId));
+    // dispatch(getLabels(routeParams.boardId));
 
     return () => {
-      dispatch(resetBoard());
+      // dispatch(resetBoard());
     };
   }, [dispatch, routeParams]);
 
@@ -52,12 +52,12 @@ function Board(props) {
 
     // reordering list
     if (result.type === 'list') {
-      dispatch(reorderList(result));
+      // dispatch(reorderList(result));
     }
 
     // reordering card
     if (result.type === 'card') {
-      dispatch(reorderCard(result));
+      // dispatch(reorderCard(result));
     }
   }
 

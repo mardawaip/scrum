@@ -3,13 +3,13 @@ import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import AppsIcon from '@mui/icons-material/Apps';
 import { useSelector } from 'react-redux';
-import { selectBoard } from '../store/boardSlice';
+import { selectData } from '../store/dataSlice';
 import { Typography } from '@mui/material';
 
 function AplikasiHeader(props) {
   const { boardId } = props;
   const location = window.location.pathname.split('/')[2];
-  const board = useSelector(selectBoard) || {};
+  const board = useSelector(selectData);
   
   return (
     <div className="p-24 sm:p-32 w-full border-b-1 flex flex-col sm:flex-row items-center justify-between container">

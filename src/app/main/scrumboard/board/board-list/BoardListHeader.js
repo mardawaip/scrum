@@ -17,7 +17,7 @@ import _ from '@lodash';
 import { Box } from '@mui/system';
 import { darken } from '@mui/material/styles';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { removeList, updateList } from '../../store/listsSlice';
+// import { removeList, updateList } from '../../store/listsSlice';
 
 /**
  * Form Validation Schema
@@ -75,7 +75,7 @@ function BoardListHeader(props) {
   }
 
   function onSubmit(newData) {
-    dispatch(updateList({ id: list.id, newData }));
+    // dispatch(updateList({ id: list.id, newData }));
     handleCloseForm();
   }
 
@@ -151,7 +151,7 @@ function BoardListHeader(props) {
           >
             <MenuItem
               onClick={() => {
-                dispatch(removeList(list.id));
+                // dispatch(removeList(list.id));
               }}
             >
               <ListItemIcon className="min-w-40">

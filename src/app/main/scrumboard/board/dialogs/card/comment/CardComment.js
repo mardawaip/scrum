@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
-import { selectMemberById } from '../../../../store/membersSlice';
+// import { selectMemberById } from '../../../../store/membersSlice';
 import CommentModel from '../../../../model/CommentModel';
 
 /**

@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import withReducer from 'app/store/withReducer';
-import { getMembers } from './store/membersSlice';
+import { getMembers } from './store/dataSlice';
 import reducer from './store';
 
 function ScrumboardApp() {

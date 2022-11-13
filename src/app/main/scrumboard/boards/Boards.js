@@ -3,13 +3,13 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoards, resetBoards, selectBoards } from '../store/boardsSlice';
+import { getBoards, resetBoards, selectBoards } from '../store/dataSlice';
 import BoardItem from './BoardItem';
 import NewBoardItem from './NewBoardItem';
 
 function Boards(props) {
   const dispatch = useDispatch();
-  const boards = useSelector(selectBoards);
+  const boards = []; //useSelector(selectBoards);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

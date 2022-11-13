@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import ToolbarMenu from './ToolbarMenu';
-import { selectLabels } from '../../../../store/labelsSlice';
+// import { selectLabels } from '../../../../store/labelsSlice';
 
 function LabelsMenu(props) {
   const labels = useSelector(selectLabels);

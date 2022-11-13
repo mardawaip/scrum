@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import ToolbarMenu from './ToolbarMenu';
-import { selectMembers } from '../../../../store/membersSlice';
+// import { selectMembers } from '../../../../store/membersSlice';
 
 function MembersMenu(props) {
   const [anchorEl, setAnchorEl] = useState(null);

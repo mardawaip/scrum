@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { newCard } from '../../store/cardsSlice';
+// import { newCard } from '../../store/dataSlice';
 
 const defaultValues = {
   title: '',
@@ -51,9 +51,9 @@ function BoardAddCard(props) {
   }
 
   function onSubmit(newData) {
-    dispatch(newCard({ listId: props.listId, newData })).then(() => {
-      props.onCardAdded();
-    });
+    // dispatch(newCard({ listId: props.listId, newData })).then(() => {
+    //   props.onCardAdded();
+    // });
     handleCloseForm();
   }
 
