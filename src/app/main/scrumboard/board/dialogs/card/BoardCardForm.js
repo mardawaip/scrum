@@ -37,11 +37,12 @@ import OptionsMenu from './toolbar/OptionsMenu';
 
 function BoardCardForm(props) {
   const dispatch = useDispatch();
-  const board = useSelector(selectBoard);
-  const labels = useSelector(selectLabels);
-  const members = useSelector(selectMembers);
-  const card = useSelector(selectCardData);
-  const list = useSelector((state) => selectListById(state, card?.listId));
+  // const board = useSelector(selectBoard);
+  // const labels = useSelector(selectLabels);
+  // const members = useSelector(selectMembers);
+  // const card = useSelector(selectCardData);
+  const { board, labels, members, card } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+  const list = null; //useSelector((state) => selectListById(state, card?.listId));
 
   const { register, watch, control, setValue } = useForm({ mode: 'onChange', defaultValues: card });
 

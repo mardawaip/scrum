@@ -8,7 +8,7 @@ import { useDeepCompareEffect } from '@fuse/hooks';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import reducer from '../store';
-// import { getBoard, reorderCard, reorderList, resetBoard, selectBoard } from '../store/dataSlice';
+import { getBoard } from '../store/dataSlice';
 import BoardAddList from './board-list/BoardAddList';
 import BoardList from './board-list/BoardList';
 import BoardCardDialog from './dialogs/card/BoardCardDialog';
@@ -21,13 +21,14 @@ import BoardHeader from './BoardHeader';
 function Board(props) {
   const dispatch = useDispatch();
   // const board = useSelector(selectBoard);
+  const { board } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const routeParams = useParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useDeepCompareEffect(() => {
-    // dispatch(getBoard(routeParams.boardId));
+    dispatch(getBoard(routeParams.boardId));
     // dispatch(getCards(routeParams.boardId));
     // dispatch(getLists(routeParams.boardId));
     // dispatch(getLabels(routeParams.boardId));

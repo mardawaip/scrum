@@ -3,13 +3,13 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoards, resetBoards, selectBoards } from '../store/dataSlice';
+import { getBoards, resetBoards } from '../store/dataSlice';
 import BoardItem from './BoardItem';
 import NewBoardItem from './NewBoardItem';
 
 function Boards(props) {
   const dispatch = useDispatch();
-  const boards = []; //useSelector(selectBoards);
+  const { boards } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -51,15 +51,14 @@ function Boards(props) {
         animate="show"
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 mt-32 md:mt-64"
       >
+        <motion.div variants={item} className="min-w-full sm:min-w-224 min-h-360">
+          <NewBoardItem />
+        </motion.div>
         {boards.map((board) => (
           <motion.div variants={item} className="min-w-full sm:min-w-224 min-h-360" key={board.id}>
             <BoardItem board={board} key={board.id} />
           </motion.div>
         ))}
-
-        <motion.div variants={item} className="min-w-full sm:min-w-224 min-h-360">
-          <NewBoardItem />
-        </motion.div>
       </motion.div>
     </div>
     </>

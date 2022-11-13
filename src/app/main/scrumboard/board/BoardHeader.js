@@ -9,7 +9,7 @@ function BoardHeader(props) {
   const location = window.location.pathname.split('/')[2];
   
   return (
-    <div className="p-24 sm:p-32 w-full border-b-1 flex flex-col sm:flex-row items-center justify-between container">
+    <div className="p-8 sm:p-8 w-full border-b-1 flex flex-col sm:flex-row items-center justify-between container">
       <div className="flex items-center mb-12 sm:mb-0">
         <BoardTitle />
       </div>
@@ -21,6 +21,7 @@ function BoardHeader(props) {
           component={NavLinkAdapter}
           to={`/scrumboard/boards/${boardId}`}
           startIcon={<FuseSvgIcon size={20}>heroicons-outline:view-boards</FuseSvgIcon>}
+          size="small"
         >
           Boards
         </Button>
@@ -31,11 +32,13 @@ function BoardHeader(props) {
           component={NavLinkAdapter}
           to={`/scrumboard/aplikasi/${boardId}`}
           startIcon={<AppsIcon fontSize="small"/>}
+          size="small"
         >
           Aplikasi
         </Button>
 
         <Button
+          size="small"
           className="whitespace-nowrap"
           variant="contained"
           color="secondary"

@@ -5,7 +5,7 @@ import BoardCardForm from './BoardCardForm';
 
 function BoardCardDialog(props) {
   const dispatch = useDispatch();
-  const cardDialogOpen = true;  //useSelector(selectCardDialogOpen);
+  const cardDialogOpen = false;  //useSelector(selectCardDialogOpen);
 
   return (
     <Dialog

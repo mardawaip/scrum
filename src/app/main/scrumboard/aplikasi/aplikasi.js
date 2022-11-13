@@ -10,6 +10,12 @@ import { getDetailAplikasi } from "../store/dataSlice";
 import withReducer from "app/store/withReducer";
 import AplikasiHeader from './aplikasiHeader';
 import { getBoard } from "../store/dataSlice";
+import BoardHeader from "../board/BoardHeader";
+import BoardSettingsSidebar from "../board/sidebars/settings/BoardSettingsSidebar";
+import { Button, Card, CardContent, Grid, LinearProgress, Paper } from "@mui/material";
+import RadialBar from "./radialBar";
+import ListWiddget from "./ListWiddget";
+import ListHeader from "./ListHeader";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
     '& .FusePageSimple-header': {
@@ -19,7 +25,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
       borderColor: theme.palette.divider,
     },
     '& .FusePageSimple-toolbar': {},
-    '& .FusePageSimple-content': {},
+    '& .FusePageSimple-content': {
+        maxWidth: '100%'
+    },
     '& .FusePageSimple-sidebarHeader': {},
     '& .FusePageSimple-sidebarContent': {},
 }));
@@ -27,20 +35,49 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 function Aplikasi() {
     const routeParams = useParams();
     const dispatch = useDispatch();
-    const { aplikasi_detail } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.aplikasi);
+    const { board, loading } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
         dispatch(getBoard(routeParams.boardId));
         dispatch(getDetailAplikasi({ id: routeParams.boardId }));
     }, [dispatch]);
+
+    if (!board) {
+        return null;
+    }
     
     return (
         <Root
-            header={<AplikasiHeader onSetSidebarOpen={setSidebarOpen} boardId={routeParams.boardId} />}
+            header={
+                <>
+                { loading && <LinearProgress/> }
+                <BoardHeader onSetSidebarOpen={setSidebarOpen} boardId={routeParams.boardId} />
+                </>
+            }
+            rightSidebarContent={<BoardSettingsSidebar onSetSidebarOpen={setSidebarOpen} />}
+            rightSidebarOpen={sidebarOpen}
             content={
-                <div className="p-24">
-                    
+                <div className="w-full">
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} sm={12} xl={12}>
+                            <ListHeader/>
+                        </Grid>
+                        <Grid item xs={12} sm={8} xl={10}>
+                            <Card>
+                                <CardContent>
+                                    <ListWiddget/>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={12} sm={4} xl={2}>
+                            <Card>
+                                <CardContent>
+                                    <RadialBar/>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
                 </div>
             }
             scroll="content"

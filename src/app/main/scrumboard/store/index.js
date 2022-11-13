@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import databanner from './dataSlice';
+import data from './dataSlice';
 import user from './userSlice';
 
 const reducer = combineReducers({
-	databanner,
+	data,
 	user
 });
 

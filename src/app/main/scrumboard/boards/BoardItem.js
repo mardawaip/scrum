@@ -9,12 +9,11 @@ import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import { useSelector } from 'react-redux';
 import _ from '@lodash';
-// import { selectMembers } from '../store/membersSlice';
 
 function BoardItem(props) {
   const { board } = props;
-  const members = useSelector(selectMembers);
-  const boardMembers = []; //board.members.map((id) => _.find(members, { id }));
+  const { members } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
+  const boardMembers = board.members.map((id) => _.find(members, { id }));
 
   return (
     <Card
