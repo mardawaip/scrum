@@ -20,7 +20,7 @@ import Box from '@mui/material/Box';
 function BoardSettingsSidebar(props) {
   const dispatch = useDispatch();
   // const board = useSelector(selectBoard);
-  const { board } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+  const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
 
   const { watch, control, reset } = useForm({
     mode: 'onChange',

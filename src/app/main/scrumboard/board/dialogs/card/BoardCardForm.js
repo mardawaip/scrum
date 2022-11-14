@@ -41,7 +41,7 @@ function BoardCardForm(props) {
   // const labels = useSelector(selectLabels);
   // const members = useSelector(selectMembers);
   // const card = useSelector(selectCardData);
-  const { board, labels, members, card } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+  const { board, labels, members, card } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const list = null; //useSelector((state) => selectListById(state, card?.listId));
 
   const { register, watch, control, setValue } = useForm({ mode: 'onChange', defaultValues: card });

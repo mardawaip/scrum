@@ -21,7 +21,7 @@ import BoardHeader from './BoardHeader';
 function Board(props) {
   const dispatch = useDispatch();
   // const board = useSelector(selectBoard);
-  const { board } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+  const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const routeParams = useParams();
@@ -109,4 +109,5 @@ function Board(props) {
   );
 }
 
-export default withReducer('scrumboardApp', reducer)(withRouter(Board));
+// export default withReducer('scrumboardApp', reducer)(withRouter(Board));
+export default Board;

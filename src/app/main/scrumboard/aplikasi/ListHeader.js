@@ -1,13 +1,22 @@
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
-// import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
-import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-// import { selectRemainingTasks } from './store/tasksSlice';
+import { setOpenDialog } from '../store/dataSlice';
+import { useDispatch } from 'react-redux';
+
 
 function ListHeader(props) {
-  const remainingTasks = 12; //useSelector(selectRemainingTasks);
+  const dispatch = useDispatch();
+  const remainingTasks = 12;
+
+  const openSection = () => {
+    dispatch(setOpenDialog({ tasks_id: '', type: 'section' }));
+  }
+
+  const openTasks = () => {
+    dispatch(setOpenDialog({ tasks_id: '', type: 'task' }));
+  }
 
   return (
     <div className="flex flex-col sm:flex-row item-center sm:items-start space-y-16 sm:space-y-0 p-8 w-full border-b-1 flex items-center justify-between items-center">
@@ -20,7 +29,7 @@ function ListHeader(props) {
             className="text-20 font-extrabold tracking-tight leading-none"
             size="small"
         >
-          Module
+          Module Menu
         </Typography>
         <Typography
             component={motion.span}
@@ -37,23 +46,21 @@ function ListHeader(props) {
 
       <div className="flex items-center -mx-8">
         <Button
-            color="info"
-            variant="contained"
-            className="mx-8 whitespace-nowrap"
-            component={NavLinkAdapter}
-            to="new/section"
-            size="small"
+          color="info"
+          variant="contained"
+          className="mx-8 whitespace-nowrap"
+          size="small"
+          onClick={openSection}
         >
-            <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
-            <span className="mx-8">Add Section</span>
+          <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
+          <span className="mx-8">Add Section</span>
         </Button>
         <Button
-            className="mx-8 whitespace-nowrap"
-            variant="contained"
-            color="primary"
-            component={NavLinkAdapter}
-            to="new/task"
-            size="small"
+          className="mx-8 whitespace-nowrap"
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={openTasks}
         >
           <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
           <span className="mx-8">Add Task</span>

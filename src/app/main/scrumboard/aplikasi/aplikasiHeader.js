@@ -9,7 +9,7 @@ import { Typography } from '@mui/material';
 function AplikasiHeader(props) {
   const { boardId } = props;
   const location = window.location.pathname.split('/')[2];
-  const { aplikasi } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+  const { aplikasi } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   
   return (
     <div className="p-24 sm:p-32 w-full border-b-1 flex flex-col sm:flex-row items-center justify-between container">

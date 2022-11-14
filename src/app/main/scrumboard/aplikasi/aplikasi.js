@@ -16,6 +16,7 @@ import { Button, Card, CardContent, Grid, LinearProgress, Paper } from "@mui/mat
 import RadialBar from "./radialBar";
 import ListWiddget from "./ListWiddget";
 import ListHeader from "./ListHeader";
+import TaskDialog from "./taskDialog";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
     '& .FusePageSimple-header': {
@@ -35,7 +36,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 function Aplikasi() {
     const routeParams = useParams();
     const dispatch = useDispatch();
-    const { board, loading } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+    const { board, loading } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
@@ -78,6 +79,7 @@ function Aplikasi() {
                             </Card>
                         </Grid>
                     </Grid>
+                    <TaskDialog/>
                 </div>
             }
             scroll="content"
@@ -85,5 +87,5 @@ function Aplikasi() {
     )
 }
 
-// export default Aplikasi;
-export default withReducer('ScrumAplikasi', reducer)(withRouter(Aplikasi));
+export default Aplikasi;
+// export default withReducer('scrumboardApp', reducer)(withRouter(Aplikasi));

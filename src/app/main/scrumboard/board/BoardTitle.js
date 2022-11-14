@@ -22,7 +22,7 @@ const schema = yup.object().shape({
 
 function BoardTitle(props) {
   const dispatch = useDispatch();
-  const { board } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+  const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
 
   const [formOpen, setFormOpen] = useState(false);
 

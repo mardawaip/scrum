@@ -2,12 +2,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
-import { Draggable } from 'react-beautiful-dnd';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { Box, LinearProgress, Typography } from '@mui/material';
+import { Draggable } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
+import { setOpenDialog } from '../store/dataSlice';
 
 function SectionListItem(props) {
+  const dispatch = useDispatch()
   const { data, index } = props;
+  
+
   return (
     <Draggable draggableId={data.id} index={index} type="list">
       {(provided, snapshot) => (
@@ -16,8 +21,11 @@ function SectionListItem(props) {
             className="px-40 py-12 group"
             sx={{ bgcolor: 'background.default' }}
             button
-            component={NavLinkAdapter}
-            to={`/tasks/${data.id}`}
+            onClick={() => {
+              dispatch(setOpenDialog(data));
+            }}
+            // component={NavLinkAdapter}
+            // to={`/tasks/${data.id}`}
             ref={provided.innerRef}
             {...provided.draggableProps}
           >
@@ -33,7 +41,7 @@ function SectionListItem(props) {
               classes={{ root: 'm-0', primary: 'font-semibold text-16 truncate' }}
               primary={data.title}
               secondary={(
-                <LinearProgressWithLabel value={data.progres} />
+                <LinearProgressWithLabel value={data.progres || 0} />
               )}
             />
           </ListItem>

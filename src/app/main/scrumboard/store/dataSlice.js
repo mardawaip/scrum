@@ -103,6 +103,10 @@ const dataSlice = createSlice({
 			aplikasi : {},
 			tasks: []
 		},
+		tasks_dialog: {
+			open: false,
+			form: {}
+		}
 	}),
 	reducers: {
 		setSearchText: {
@@ -116,8 +120,17 @@ const dataSlice = createSlice({
 		setLoading: (state, action) => {
 			state.loading = action.payload;
 		},
-		resetBoards: (statem, action) => {
+		resetBoards: (state, action) => {
 			// code...
+		},
+		setOpenDialog: (state, action) => {
+			state.tasks_dialog = {
+				open: true,
+				form: action.payload
+			}
+		},
+		setCloseDialog: (state, action) => {
+			state.tasks_dialog = { open: false, form: {} }
 		}
 	},
 	extraReducers: {
@@ -140,8 +153,8 @@ const dataSlice = createSlice({
 			state.loading = false;
 		},
 		[getDetailAplikasi.fulfilled]: (state, action) => {
-			state.aplikasi = action.payload.data;
-
+			const { data } = action.payload;
+			state.aplikasi = data;
 		},
 	}
 });
@@ -150,7 +163,9 @@ export const {
 	setSearchText,
 	changeKey,
 	resetBoards,
-	setLoading
+	setLoading,
+	setOpenDialog,
+	setCloseDialog
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

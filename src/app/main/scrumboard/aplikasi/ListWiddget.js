@@ -67,7 +67,7 @@ function ListWiddget(props) {
     },
   ];
 
-  const { tasks } = useSelector(({ ScrumAplikasi }) => ScrumAplikasi.data);
+  const { tasks } = useSelector(({ scrumboardApp }) => scrumboardApp.data.aplikasi);
 
   if (!tasks) {
     return null;
