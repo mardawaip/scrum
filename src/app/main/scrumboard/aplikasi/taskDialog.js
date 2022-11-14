@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { setCloseDialog } from '../store/dataSlice';
+import { addTask, removeTask, setCloseDialog, updateTask } from '../store/dataSlice';
 
 const schema = yup.object().shape({
     title: yup.string().required('You must enter a value'),
@@ -21,9 +21,9 @@ function TaskDialog() {
         tasks_id : '',
         type : 'section', //section,task
         title : '',
-        completed : false,
-        priority : 0,
-        aplikasi_id : aplikasi.aplikasi_id,
+        completed : 'false',
+        priority : 1,
+        aplikasi_id : '',
         order : 0,
         multi : false
     }
@@ -38,11 +38,23 @@ function TaskDialog() {
     const data = watch();
 
     useEffect(() => {
-        reset({ ...data, ...form });
-    }, [dispatch, form]);
+        reset({ ...data, ...form, aplikasi_id: aplikasi.aplikasi_id });
+    }, [dispatch, form, aplikasi]);
 
     const handleClose = () => {
         dispatch(setCloseDialog());
+    }
+
+    const handleSimpan = (_data) => {
+        if(data.tasks_id){
+            dispatch(updateTask(_data));
+        }else{
+            dispatch(addTask(_data));
+        }
+    }
+
+    const handleHapus = () => {
+        dispatch(removeTask(data.tasks_id));
     }
     
     return (
@@ -54,7 +66,11 @@ function TaskDialog() {
       >
         <DialogTitle>{ data.tasks_id ? "Edit" : "Tambah" } { data.type === 'section' ? "Section" : "Tasks" }</DialogTitle>
         <DialogContent>
-          <form className="w-full" onSubmit={handleSubmit((_data) => console.info(_data))}>
+          <form
+            className="w-full"
+            onSubmit={handleSubmit((_data) => handleSimpan(_data))}
+            // onSubmit={handleSubmit((_data) => console.info(_data))}
+        >
             <div className="mb-b" style={{ display: data.tasks_id ? 'none' : '' }}>
               <Controller
                 name="multi"
@@ -104,18 +120,31 @@ function TaskDialog() {
                 color="secondary"
                 type="submit"
                 disabled={_.isEmpty(dirtyFields) || !isValid}
+                size="small"
               >
-                Submit
+                Simpan
               </Button>
 
               <Button
                 className="mx-8"
                 type="button"
+                size="small"
                 onClick={() => {
                   reset(defaultValues);
                 }}
               >
-                Reset Form
+                Reset
+              </Button>
+
+              <Button
+                className="mx-8"
+                variant="contained"
+                color="error"
+                type="button"
+                size="small"
+                onClick={handleHapus}
+              >
+                Hapus
               </Button>
             </div>
           </form>

@@ -4,69 +4,10 @@ import List from '@mui/material/List';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import TaskListItem from './TaskListItem';
 import SectionListItem from './SectionListItem';
+import { handleChangeTask, reorderList } from '../store/dataSlice';
 
 function ListWiddget(props) {
   const dispatch = useDispatch();
-  const tasks2 = [
-    {
-      "id": "f65d517a-6f69-4c88-81f5-416f47405ce1",
-      "type": "section",
-      "title": "Dashboard",
-      "completed": true,
-      "progres": 15,
-      "priority": 1,
-      "order": 0
-    },
-    {
-      "id": "0fcece82-1691-4b98-a9b9-b63218f9deef",
-      "type": "task",
-      "title": "Hasil Pengujian",
-      "completed": true,
-      "priority": 0,
-      "order": 1
-    },
-    {
-      "id": "2e6971cd-49d5-49f1-8cbd-fba5c71e6062",
-      "type": "task",
-      "title": "PENGENDALIAN PLH",
-      "completed": false,
-      "priority": 0,
-      "order": 2
-    },
-    {
-      "id": "2e6971cd-49d5-49f1-8cbd-fba5c71e6063",
-      "type": "task",
-      "title": "Konservasi Sumber Daya Alam",
-      "completed": false,
-      "priority": 0,
-      "order": 2
-    },
-    {
-      "id": "2e6971cd-49d5-49f1-8cbd-fba5c71e6064",
-      "type": "task",
-      "title": "Persampahan",
-      "completed": false,
-      "priority": 0,
-      "order": 2
-    },
-    {
-      "id": "2e6971cd-49d5-49f1-8cbd-fba5c71e6065",
-      "type": "task",
-      "title": "Trend Pengujian",
-      "completed": false,
-      "priority": 0,
-      "order": 2
-    },
-    {
-      "id": "2e6971cd-49d5-49f1-8cbd-fba5c71e6066",
-      "type": "task",
-      "title": "Kemitraan Lingkungan Hidup",
-      "completed": false,
-      "priority": 0,
-      "order": 2
-    },
-  ];
-
   const { tasks } = useSelector(({ scrumboardApp }) => scrumboardApp.data.aplikasi);
 
   if (!tasks) {
@@ -92,13 +33,21 @@ function ListWiddget(props) {
       return;
     }
 
-    dispatch(
-      reorderList({
-        arr: tasks,
-        startIndex: result.source.index,
-        endIndex: result.destination.index,
-      })
-    );
+    const startIndex = result.source.index;
+    const endIndex = result.destination.index;
+
+    const ordered = _.merge([], tasks);
+    const [removed] = ordered.splice(startIndex, 1);
+    ordered.splice(endIndex, 0, removed);
+
+    const tasks_ = ordered;
+
+    const data_update = tasks_.map((opt, key) => {  
+      return { tasks_id: opt.tasks_id, order: key }
+    });
+
+    dispatch(handleChangeTask(tasks_));
+    dispatch(reorderList(data_update));
   }
   return (
     <List className="w-full m-0 p-0">

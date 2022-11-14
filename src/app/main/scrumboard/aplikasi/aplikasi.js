@@ -37,6 +37,10 @@ function Aplikasi() {
     const routeParams = useParams();
     const dispatch = useDispatch();
     const { board, loading } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
+    const { tasks } = useSelector(({ scrumboardApp }) => scrumboardApp.data.aplikasi);
+    const count = tasks.filter((opt) => opt.type === 'task').length;
+    const acc = tasks.filter((opt) => opt.type === 'task' && opt.completed === 'true').length;
+    const progres = (acc/count)*100;
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
@@ -74,7 +78,7 @@ function Aplikasi() {
                         <Grid item xs={12} sm={4} xl={2}>
                             <Card>
                                 <CardContent>
-                                    <RadialBar/>
+                                    <RadialBar value={progres.toFixed(2)}/>
                                 </CardContent>
                             </Card>
                         </Grid>

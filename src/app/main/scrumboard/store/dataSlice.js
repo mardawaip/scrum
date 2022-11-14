@@ -38,10 +38,11 @@ export const getDetailAplikasi = createAsyncThunk(
 	'dataScrum/getDetailAplikasi',
 	async (selectData, { getState, dispatch }) => {
 		dispatch(setLoading(true));
-		const response = await axios.get(`/api/scrum/getAplikasiDetail/${selectData.id}`);
+		const id = selectData ? selectData.id : getState().scrumboardApp.data.id;
+		const response = await axios.get(`/api/scrum/getAplikasiDetail/${id}`);
 		const data = await response.data;
 
-		return { data };
+		return { data, id };
 	}
 )
 
@@ -81,6 +82,51 @@ export const removeData = createAsyncThunk(
 	}
 );
 
+export const addTask = createAsyncThunk(
+	'dataScrum/addTask',
+	async (task, { dispatch, getState }) => {
+		dispatch(setLoading(true));
+		const response = await axios.post('/api/scrum/tasks', task);
+		const data = await response.data;
+		dispatch(setCloseDialog());
+		dispatch(getDetailAplikasi());
+	  	return data;
+	}
+);
+
+export const updateTask = createAsyncThunk(
+	'dataScrum/updateTask',
+	async (task, { dispatch, getState }) => {
+		const response = await axios.put(`/api/scrum/tasks/${task.id}`, task);
+		const data = await response.data;
+		dispatch(setCloseDialog());
+		dispatch(getDetailAplikasi());
+		return data;
+	}
+);
+
+export const removeTask = createAsyncThunk(
+	'dataScrum/removeTask',
+	async (id, { dispatch, getState }) => {
+		const response = await axios.delete(`/api/scrum/tasks/${id}`);
+		await response.data;
+		dispatch(getDetailAplikasi());
+		dispatch(setCloseDialog());
+		return id;
+	}
+);
+export const reorderList = createAsyncThunk(
+	'dataScrum/reorderList',
+	async (task, { dispatch, getState }) => {
+		dispatch(setLoading(true));
+		const response = await axios.post('/api/scrum/tasks/reorderList', {datas: task});
+		const data = await response.data;
+		dispatch(setLoading(false));
+		dispatch(getDetailAplikasi());
+	  	return data;
+	}
+);
+
 const datasAdapter = createEntityAdapter({ selectId: (data) => data.banner_id });
 
 export const { selectAll: selectData, selectById: selectDataById } = datasAdapter.getSelectors(
@@ -90,6 +136,7 @@ export const { selectAll: selectData, selectById: selectDataById } = datasAdapte
 const dataSlice = createSlice({
 	name: 'scrumboardApp',
 	initialState: datasAdapter.getInitialState({
+		id: '',
 		loading: false,
 		searchText: {},
 		routeParams: {},
@@ -131,6 +178,9 @@ const dataSlice = createSlice({
 		},
 		setCloseDialog: (state, action) => {
 			state.tasks_dialog = { open: false, form: {} }
+		},
+		handleChangeTask: (state, action) => {
+			state.aplikasi.tasks = action.payload
 		}
 	},
 	extraReducers: {
@@ -153,8 +203,10 @@ const dataSlice = createSlice({
 			state.loading = false;
 		},
 		[getDetailAplikasi.fulfilled]: (state, action) => {
-			const { data } = action.payload;
+			const { data, id } = action.payload;
 			state.aplikasi = data;
+			state.loading = false;
+			state.id = id;
 		},
 	}
 });
@@ -165,7 +217,8 @@ export const {
 	resetBoards,
 	setLoading,
 	setOpenDialog,
-	setCloseDialog
+	setCloseDialog,
+	handleChangeTask
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

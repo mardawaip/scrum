@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
 import clsx from 'clsx';
+import { setOpenDialog } from '../store/dataSlice';
 // import { updateTask } from './store/taskSlice';
 
 function TaskListItem(props) {
@@ -24,8 +25,11 @@ function TaskListItem(props) {
             className={clsx(snapshot.isDragging ? 'shadow-lg' : 'shadow', 'px-40 py-4 group')}
             sx={{ bgcolor: 'background.paper' }}
             button
-            component={NavLinkAdapter}
-            to={`/tasks/${data.id}`}
+            onClick={() => {
+              dispatch(setOpenDialog(data));
+            }}
+            // component={NavLinkAdapter}
+            // to={`/tasks/${data.id}`}
             ref={provided.innerRef}
             {...provided.draggableProps}
           >
@@ -39,7 +43,7 @@ function TaskListItem(props) {
             </div>
             <ListItemIcon className="min-w-40 -ml-10 mr-8">
               <IconButton
-                sx={{ color: data.completed ? 'secondary.main' : 'text.disabled' }}
+                sx={{ color: data.completed === 'true' ? 'secondary.main' : 'text.disabled' }}
                 onClick={(ev) => {
                   ev.preventDefault();
                   ev.stopPropagation();

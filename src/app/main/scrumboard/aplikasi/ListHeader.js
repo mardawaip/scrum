@@ -11,11 +11,11 @@ function ListHeader(props) {
   const remainingTasks = 12;
 
   const openSection = () => {
-    dispatch(setOpenDialog({ tasks_id: '', type: 'section' }));
+    dispatch(setOpenDialog({ tasks_id: '', title: '', type: 'section' }));
   }
 
   const openTasks = () => {
-    dispatch(setOpenDialog({ tasks_id: '', type: 'task' }));
+    dispatch(setOpenDialog({ tasks_id: '', title: '', type: 'task' }));
   }
 
   return (
@@ -46,16 +46,6 @@ function ListHeader(props) {
 
       <div className="flex items-center -mx-8">
         <Button
-          color="info"
-          variant="contained"
-          className="mx-8 whitespace-nowrap"
-          size="small"
-          onClick={openSection}
-        >
-          <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
-          <span className="mx-8">Add Section</span>
-        </Button>
-        <Button
           className="mx-8 whitespace-nowrap"
           variant="contained"
           color="primary"
@@ -63,7 +53,17 @@ function ListHeader(props) {
           onClick={openTasks}
         >
           <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
-          <span className="mx-8">Add Task</span>
+          <span className="mx-8">Tambah Task</span>
+        </Button>
+        <Button
+          color="info"
+          variant="contained"
+          className="mx-8 whitespace-nowrap"
+          size="small"
+          onClick={openSection}
+        >
+          <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
+          <span className="mx-8">Tambah Section</span>
         </Button>
       </div>
     </div>

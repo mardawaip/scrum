@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Chart from 'react-apexcharts';
 
-function RadialBar()
+function RadialBar({ value })
 {
-    const [state, setState] = useState({
+    const state = {
         options: {
             labels     : ['Progres'],
             plotOptions: {
@@ -14,8 +14,8 @@ function RadialBar()
                 },
             },
         },
-        series : [78],
-    });
+        series : [value],
+    };
 
     return (
         <div className="radialbar">
