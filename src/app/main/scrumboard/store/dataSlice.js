@@ -153,7 +153,9 @@ const dataSlice = createSlice({
 		tasks_dialog: {
 			open: false,
 			form: {}
-		}
+		},
+		dialogOpen: false,
+		data: null
 	}),
 	reducers: {
 		setSearchText: {
@@ -181,7 +183,15 @@ const dataSlice = createSlice({
 		},
 		handleChangeTask: (state, action) => {
 			state.aplikasi.tasks = action.payload
-		}
+		},
+		openCardDialog: (state, action) => {
+			state.dialogOpen = true;
+			state.data = action.payload;
+		},
+		closeCardDialog: (state, action) => {
+			state.dialogOpen = false;
+			state.data = null;
+		},
 	},
 	extraReducers: {
 		[getMembers.fulfilled]: (state, action) => {
@@ -218,7 +228,9 @@ export const {
 	setLoading,
 	setOpenDialog,
 	setCloseDialog,
-	handleChangeTask
+	handleChangeTask,
+	openCardDialog,
+	closeCardDialog
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

@@ -24,8 +24,6 @@ function Board(props) {
   const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
-  console.log(board);
-
   const routeParams = useParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

@@ -20,19 +20,24 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { Box } from '@mui/system';
-// import { closeCardDialog, removeCard, selectCardData, updateCard } from '../../../store/cardSlice';
+import {
+  closeCardDialog,
+  // removeCard,
+  // selectCardData,
+  // updateCard
+} from '../../../store/dataSlice';
 import CardActivity from './activity/CardActivity';
 import CardAttachment from './attachment/CardAttachment';
 import CardChecklist from './checklist/CardChecklist';
-import CardComment from './comment/CardComment';
+// import CardComment from './comment/CardComment';
 // import { selectListById } from '../../../store/listsSlice';
 // import { selectLabels } from '../../../store/labelsSlice';
 // import { selectBoard } from '../../../store/boardSlice';
 // import { selectMembers } from '../../../store/membersSlice';
-import DueMenu from './toolbar/DueMenu';
-import LabelsMenu from './toolbar/LabelsMenu';
-import MembersMenu from './toolbar/MembersMenu';
-import CheckListMenu from './toolbar/CheckListMenu';
+// import DueMenu from './toolbar/DueMenu';
+// import LabelsMenu from './toolbar/LabelsMenu';
+// import MembersMenu from './toolbar/MembersMenu';
+// import CheckListMenu from './toolbar/CheckListMenu';
 import OptionsMenu from './toolbar/OptionsMenu';
 
 function BoardCardForm(props) {
@@ -41,7 +46,7 @@ function BoardCardForm(props) {
   // const labels = useSelector(selectLabels);
   // const members = useSelector(selectMembers);
   // const card = useSelector(selectCardData);
-  const { board, labels, members, card } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
+  const { board, labels, members, data:card } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const list = null; //useSelector((state) => selectListById(state, card?.listId));
 
   const { register, watch, control, setValue } = useForm({ mode: 'onChange', defaultValues: card });
@@ -61,9 +66,9 @@ function BoardCardForm(props) {
     }
   }, [card, cardForm, updateCardData]);
 
-  useEffect(() => {
-    register('attachmentCoverId');
-  }, [register]);
+  // useEffect(() => {
+  //   register('attachmentCoverId');
+  // }, [register]);
 
   if (!card) {
     return null;
@@ -187,7 +192,7 @@ function BoardCardForm(props) {
             </div>
           )}
 
-          {cardForm.memberIds && cardForm.memberIds.length > 0 && (
+          {false && cardForm.memberIds && cardForm.memberIds.length > 0 && (
             <div className="flex-1 mb-24 mx-8">
               <div className="flex items-center mt-16 mb-12">
                 <FuseSvgIcon size={20}>heroicons-outline:users</FuseSvgIcon>
@@ -239,7 +244,7 @@ function BoardCardForm(props) {
             </div>
           )}
 
-          {cardForm.attachments && cardForm.attachments.length > 0 && (
+          {false && cardForm.attachments && cardForm.attachments.length > 0 && (
             <div className="mb-24">
               <div className="flex items-center mt-16 mb-12">
                 <FuseSvgIcon size={20}>heroicons-outline:paper-clip</FuseSvgIcon>
@@ -287,11 +292,11 @@ function BoardCardForm(props) {
               <Typography className="font-semibold text-16 mx-8">Comment</Typography>
             </div>
             <div>
-              <CardComment
+              {/* <CardComment
                 onCommentAdd={(comment) =>
                   setValue('activities', [comment, ...cardForm.activities])
                 }
-              />
+              /> */}
             </div>
           </div>
 
@@ -333,7 +338,7 @@ function BoardCardForm(props) {
               <FuseSvgIcon>heroicons-outline:x</FuseSvgIcon>
             </IconButton>
             <div className="flex flex-row items-center sm:items-start sm:flex-col flex-1">
-              <Controller
+              {/* <Controller
                 name="dueDate"
                 control={control}
                 defaultValue={null}
@@ -344,9 +349,9 @@ function BoardCardForm(props) {
                     dueDate={value}
                   />
                 )}
-              />
+              /> */}
 
-              <Controller
+              {/* <Controller
                 name="labels"
                 control={control}
                 defaultValue={[]}
@@ -356,9 +361,9 @@ function BoardCardForm(props) {
                     labels={value}
                   />
                 )}
-              />
+              /> */}
 
-              <Controller
+              {/* <Controller
                 name="memberIds"
                 control={control}
                 defaultValue={[]}
@@ -368,9 +373,9 @@ function BoardCardForm(props) {
                     memberIds={value}
                   />
                 )}
-              />
+              /> */}
 
-              <Controller
+              {/* <Controller
                 name="attachments"
                 control={control}
                 defaultValue={[]}
@@ -379,9 +384,9 @@ function BoardCardForm(props) {
                     <FuseSvgIcon>heroicons-outline:paper-clip</FuseSvgIcon>
                   </IconButton>
                 )}
-              />
+              /> */}
 
-              <Controller
+              {/* <Controller
                 name="checklists"
                 control={control}
                 defaultValue={[]}
@@ -390,7 +395,7 @@ function BoardCardForm(props) {
                     onAddCheckList={(newList) => onChange([...cardForm.checklists, newList])}
                   />
                 )}
-              />
+              /> */}
 
               <OptionsMenu onRemoveCard={() => dispatch(removeCard())} />
             </div>

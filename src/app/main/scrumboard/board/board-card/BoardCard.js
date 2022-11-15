@@ -9,7 +9,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AvatarGroup } from '@mui/material';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-// import { openCardDialog } from '../../store/dataSlice';
+import { openCardDialog } from '../../store/dataSlice';
 // import { selectCardById } from '../../store/dataSlice';
 import BoardCardLabel from './BoardCardLabel';
 // import { selectMembers } from '../../store/dataSlice';
@@ -27,15 +27,15 @@ function BoardCard(props) {
   const { cardId, index } = props;
   const dispatch = useDispatch();
   // const board = {}; //useSelector(selectBoard);
-  const card = {}; //useSelector((state) => selectCardById(state, cardId));
+  const card = cardId; //{}; //useSelector((state) => selectCardById(state, cardId));
   // const members = useSelector(selectMembers);
   const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const commentsCount = []; //getCommentsCount(card);
   const cardCoverImage = _.find(card.attachments, { id: card.attachmentCoverId });
 
   function handleCardClick(ev, _card) {
-    ev.preventDefault();
-    // dispatch(openCardDialog(_card));
+    // ev.preventDefault();
+    dispatch(openCardDialog(_card));
   }
 
   function getCommentsCount(_card) {
