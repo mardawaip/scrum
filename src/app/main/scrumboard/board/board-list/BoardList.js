@@ -17,9 +17,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 function BoardList(props) {
-  const { listId, cardIds } = props;
+  const { listId, cardIds, list } = props;
   const contentScrollEl = useRef(null);
-  const list = []; //useSelector((state) => selectListById(state, listId));
+  // const list = []; //useSelector((state) => selectListById(state, listId));
 
   function handleCardAdded() {
     contentScrollEl.current.scrollTop = contentScrollEl.current.scrollHeight;

@@ -136,16 +136,20 @@ function TaskDialog() {
                 Reset
               </Button>
 
-              <Button
-                className="mx-8"
-                variant="contained"
-                color="error"
-                type="button"
-                size="small"
-                onClick={handleHapus}
-              >
-                Hapus
-              </Button>
+            {
+                data.tasks_id && (
+                    <Button
+                        className="mx-8"
+                        variant="contained"
+                        color="error"
+                        type="button"
+                        size="small"
+                        onClick={handleHapus}
+                    >
+                        Hapus
+                    </Button>
+                )
+            }
             </div>
           </form>
         </DialogContent>

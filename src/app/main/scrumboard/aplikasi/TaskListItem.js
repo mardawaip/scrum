@@ -13,6 +13,10 @@ import clsx from 'clsx';
 import { setOpenDialog } from '../store/dataSlice';
 // import { updateTask } from './store/taskSlice';
 
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import UpdateIcon from '@mui/icons-material/Update';
+
 function TaskListItem(props) {
   const { data, index } = props;
   const dispatch = useDispatch();
@@ -43,14 +47,19 @@ function TaskListItem(props) {
             </div>
             <ListItemIcon className="min-w-40 -ml-10 mr-8">
               <IconButton
-                sx={{ color: data.completed === 'true' ? 'secondary.main' : 'text.disabled' }}
+                sx={{
+                  color: data.completed === 'true' ? 'secondary.main' : data.completed === 'progres' ? 'orange' : 'text.disabled'
+                }}
                 onClick={(ev) => {
                   ev.preventDefault();
                   ev.stopPropagation();
                   // dispatch(updateTask({ ...data, completed: !data.completed }));
                 }}
               >
-                <FuseSvgIcon>heroicons-outline:check-circle</FuseSvgIcon>
+                {/* <FuseSvgIcon>heroicons-outline:check-circle</FuseSvgIcon> */}
+                { data.completed === 'true' && <CheckCircleOutlineIcon/> }
+                { data.completed === 'false' && <RemoveCircleOutlineIcon/> }
+                { data.completed === 'progres' && <UpdateIcon/> }
               </IconButton>
             </ListItemIcon>
             <ListItemText classes={{ root: 'm-0', primary: 'truncate' }} primary={(<Typography style={{ fontSize: '12px' }}>{ data.title}</Typography>)} />

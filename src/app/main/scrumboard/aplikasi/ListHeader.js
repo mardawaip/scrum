@@ -4,11 +4,13 @@ import Button from '@mui/material/Button';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { setOpenDialog } from '../store/dataSlice';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 function ListHeader(props) {
   const dispatch = useDispatch();
-  const remainingTasks = 12;
+  const { tasks } = useSelector(({ scrumboardApp }) => scrumboardApp.data.aplikasi);
+  const count = tasks.filter((opt) => opt.type === 'task').length;
 
   const openSection = () => {
     dispatch(setOpenDialog({ tasks_id: '', title: '', type: 'section' }));
@@ -40,7 +42,7 @@ function ListHeader(props) {
             color="text.secondary"
             size="small"
         >
-            {`${remainingTasks} remaining tasks`}
+            {`${count} remaining tasks`}
         </Typography>
       </div>
 

@@ -24,6 +24,8 @@ function Board(props) {
   const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
+  console.log(board);
+
   const routeParams = useParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -80,6 +82,7 @@ function Board(props) {
                       <div ref={provided.innerRef} className="flex py-16 md:py-24 px-8 md:px-12">
                         {board?.lists.map((list, index) => (
                           <BoardList
+                            list={list}
                             key={list.id}
                             listId={list.id}
                             cardIds={list.cards}
@@ -89,7 +92,7 @@ function Board(props) {
 
                         {provided.placeholder}
 
-                        <BoardAddList />
+                        {/* <BoardAddList /> */}
                       </div>
                     )}
                   </Droppable>

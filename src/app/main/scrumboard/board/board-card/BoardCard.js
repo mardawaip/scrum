@@ -26,10 +26,11 @@ const StyledCard = styled(Card)(({ theme }) => ({
 function BoardCard(props) {
   const { cardId, index } = props;
   const dispatch = useDispatch();
-  // const board = useSelector(selectBoard);
-  // const card = useSelector((state) => selectCardById(state, cardId));
+  // const board = {}; //useSelector(selectBoard);
+  const card = {}; //useSelector((state) => selectCardById(state, cardId));
   // const members = useSelector(selectMembers);
-  const commentsCount = getCommentsCount(card);
+  const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
+  const commentsCount = []; //getCommentsCount(card);
   const cardCoverImage = _.find(card.attachments, { id: card.attachmentCoverId });
 
   function handleCardClick(ev, _card) {
@@ -57,23 +58,23 @@ function BoardCard(props) {
             )}
 
             <div className="p-16 pb-0">
-              {card.labels.length > 0 && (
+              {/* {card.labels.length > 0 && (
                 <div className="flex flex-wrap mb-8 -mx-4">
                   {card.labels.map((id) => (
                     <BoardCardLabel id={id} key={id} />
                   ))}
                 </div>
-              )}
+              )} */}
 
-              <Typography className="font-medium mb-12">{card?.title}</Typography>
+              <Typography className="font-medium mb-12">{card.title}</Typography>
 
-              {(card.dueDate || card.checklists.length > 0) && (
+              {/* {(card.dueDate || card.checklists.length > 0) && (
                 <div className="flex items-center mb-12 -mx-4">
                   <BoardCardDueDate dueDate={card.dueDate} />
 
                   <BoardCardCheckItems card={card} />
                 </div>
-              )}
+              )} */}
             </div>
 
             <div className="flex justify-between h-48 px-16">
@@ -113,7 +114,7 @@ function BoardCard(props) {
                 )}
               </div>
 
-              <div className="flex items-center justify-end space-x-12">
+              {/* <div className="flex items-center justify-end space-x-12">
                 {card.memberIds.length > 0 && (
                   <div className="flex justify-start">
                     <AvatarGroup max={3} classes={{ avatar: 'w-24 h-24 text-12' }}>
@@ -128,7 +129,7 @@ function BoardCard(props) {
                     </AvatarGroup>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           </StyledCard>
         </div>
