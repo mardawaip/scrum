@@ -8,7 +8,7 @@ import { useDeepCompareEffect } from '@fuse/hooks';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import reducer from '../store';
-import { getBoard } from '../store/dataSlice';
+import { getBoard, reorderCard, reorderListCard } from '../store/dataSlice';
 import BoardAddList from './board-list/BoardAddList';
 import BoardList from './board-list/BoardList';
 import BoardCardDialog from './dialogs/card/BoardCardDialog';
@@ -17,14 +17,16 @@ import BoardSettingsSidebar from './sidebars/settings/BoardSettingsSidebar';
 // import { getLists } from '../store/dataSlice';
 // import { getLabels } from '../store/dataSlice';
 import BoardHeader from './BoardHeader';
+import { LinearProgress } from '@mui/material';
 
 function Board(props) {
   const dispatch = useDispatch();
   // const board = useSelector(selectBoard);
-  const { board } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
+  const { board, loading } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const routeParams = useParams();
+  const { boardId, taskId } = routeParams;
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useDeepCompareEffect(() => {
@@ -53,12 +55,16 @@ function Board(props) {
 
     // reordering list
     if (result.type === 'list') {
-      // dispatch(reorderList(result));
+      dispatch(reorderListCard(result));
     }
 
     // reordering card
     if (result.type === 'card') {
-      // dispatch(reorderCard(result));
+      result = {
+        ...result,
+        boardId
+      }
+      dispatch(reorderCard(result));
     }
   }
 
@@ -69,7 +75,12 @@ function Board(props) {
   return (
     <>
       <FusePageSimple
-        header={<BoardHeader onSetSidebarOpen={setSidebarOpen} boardId={routeParams.boardId} />}
+        header={
+          <>
+          <BoardHeader onSetSidebarOpen={setSidebarOpen} boardId={boardId} />
+          { loading && <LinearProgress/> }
+          </>
+        }
         content={
           <>
             {board?.lists && (

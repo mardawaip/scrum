@@ -40,7 +40,7 @@ function Aplikasi() {
     const { tasks } = useSelector(({ scrumboardApp }) => scrumboardApp.data.aplikasi);
     const count = tasks.filter((opt) => opt.type === 'task').length;
     const acc = tasks.filter((opt) => opt.type === 'task' && opt.completed === 'true').length;
-    const progres = (acc/count)*100;
+    const progres = (acc/count)*100 || 0;
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {

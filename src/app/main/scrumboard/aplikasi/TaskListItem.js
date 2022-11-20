@@ -16,10 +16,13 @@ import { setOpenDialog } from '../store/dataSlice';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import UpdateIcon from '@mui/icons-material/Update';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function TaskListItem(props) {
   const { data, index } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const routeParams = useParams();
 
   return (
     <Draggable draggableId={data.id} index={index} type="list">
@@ -53,6 +56,7 @@ function TaskListItem(props) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   ev.stopPropagation();
+                  navigate(`/scrumboard/boards/${routeParams.boardId}/${data.id}`)
                   // dispatch(updateTask({ ...data, completed: !data.completed }));
                 }}
               >
@@ -82,6 +86,9 @@ function TaskListItem(props) {
                   {format(new Date(data.dueDate), 'LLL dd')}
                 </Typography>
               )}
+              <Typography className="text-12 whitespace-nowrap" color="text.secondary">
+                { `${data.scrum?.selesai}/${data.scrum?.count}` }
+              </Typography>
             </div>
           </ListItem>
           <Divider />

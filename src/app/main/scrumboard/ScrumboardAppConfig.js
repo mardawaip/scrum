@@ -24,6 +24,10 @@ const ScrumboardAppConfig = {
           element: <Boards />,
         },
         {
+          path: 'boards/:boardId/:taskId',
+          element: <Board />,
+        },
+        {
           path: 'boards/:boardId',
           element: <Board />,
         },

@@ -24,7 +24,7 @@ import {
   closeCardDialog,
   // removeCard,
   // selectCardData,
-  // updateCard
+  updateCard
 } from '../../../store/dataSlice';
 import CardActivity from './activity/CardActivity';
 import CardAttachment from './attachment/CardAttachment';
@@ -39,6 +39,7 @@ import CardChecklist from './checklist/CardChecklist';
 // import MembersMenu from './toolbar/MembersMenu';
 // import CheckListMenu from './toolbar/CheckListMenu';
 import OptionsMenu from './toolbar/OptionsMenu';
+import { FormControl, FormLabel, MenuItem, Select } from '@mui/material';
 
 function BoardCardForm(props) {
   const dispatch = useDispatch();
@@ -47,28 +48,32 @@ function BoardCardForm(props) {
   // const members = useSelector(selectMembers);
   // const card = useSelector(selectCardData);
   const { board, labels, members, data:card } = useSelector(({ scrumboardApp }) => scrumboardApp.data);
-  const list = null; //useSelector((state) => selectListById(state, card?.listId));
+  const list = card; //useSelector((state) => selectListById(state, card?.listId));
 
   const { register, watch, control, setValue } = useForm({ mode: 'onChange', defaultValues: card });
 
   const cardForm = watch();
 
-  const updateCardData = useDebounce((newCard) => {
-    dispatch(updateCard(newCard));
-  }, 600);
+  // const updateCardData = useDebounce((newCard) => {
+  //   dispatch(updateCard(newCard));
+  // }, 600);
 
-  useEffect(() => {
-    if (!card) {
-      return;
-    }
-    if (!_.isEqual(card, cardForm)) {
-      updateCardData(cardForm);
-    }
-  }, [card, cardForm, updateCardData]);
+  // useEffect(() => {
+  //   if (!card) {
+  //     return;
+  //   }
+  //   if (!_.isEqual(card, cardForm)) {
+  //     updateCardData(cardForm);
+  //   }
+  // }, [card, cardForm, updateCardData]);
 
   // useEffect(() => {
   //   register('attachmentCoverId');
   // }, [register]);
+
+  const handleUpdate = () => {
+    dispatch(updateCard(cardForm));
+  }
 
   if (!card) {
     return null;
@@ -128,6 +133,27 @@ function BoardCardForm(props) {
                     ),
                   }}
                 />
+              )}
+            />
+          </div>
+
+          <div className="flex items-center mb-24">
+            <Controller
+              name="tasks_id"
+              control={control}
+              render={({ field }) => (
+                <FormControl required fullWidth>
+                  <FormLabel className="font-medium text-14" component="legend">
+                    Module Task
+                  </FormLabel>
+                  <Select {...field} variant="outlined" fullWidth>
+                    {
+                      board?.tasks.map((opt, key) => {
+                        return ( <MenuItem key={key} value={opt.tasks_id}>{ opt.title }</MenuItem> )
+                      })
+                    }
+                  </Select>
+                </FormControl>
               )}
             />
           </div>
@@ -338,6 +364,16 @@ function BoardCardForm(props) {
               <FuseSvgIcon>heroicons-outline:x</FuseSvgIcon>
             </IconButton>
             <div className="flex flex-row items-center sm:items-start sm:flex-col flex-1">
+              <Controller
+                name="labels"
+                control={control}
+                defaultValue={[]}
+                render={({ field: { onChange, value } }) => (
+                  <IconButton size="large" color="success" onClick={handleUpdate}>
+                    <FuseSvgIcon>heroicons-outline:badge-check</FuseSvgIcon>
+                  </IconButton>
+                )}
+              />
               {/* <Controller
                 name="dueDate"
                 control={control}

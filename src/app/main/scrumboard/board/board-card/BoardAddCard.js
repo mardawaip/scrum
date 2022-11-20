@@ -10,7 +10,8 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-// import { newCard } from '../../store/dataSlice';
+import { newCard } from '../../store/dataSlice';
+import { useParams } from 'react-router-dom';
 
 const defaultValues = {
   title: '',
@@ -25,6 +26,8 @@ const schema = yup.object().shape({
 
 function BoardAddCard(props) {
   const dispatch = useDispatch();
+  const routeParams = useParams();
+  const { boardId } = routeParams;
 
   const [formOpen, setFormOpen] = useState(false);
   const { control, formState, handleSubmit, reset } = useForm({
@@ -51,9 +54,9 @@ function BoardAddCard(props) {
   }
 
   function onSubmit(newData) {
-    // dispatch(newCard({ listId: props.listId, newData })).then(() => {
-    //   props.onCardAdded();
-    // });
+    dispatch(newCard({ listId: props.listId, boardId, newData })).then(() => {
+      props.onCardAdded();
+    });
     handleCloseForm();
   }
 

@@ -43,7 +43,7 @@ function BoardCard(props) {
   }
 
   return (
-    <Draggable draggableId={cardId} index={index} type="card">
+    <Draggable draggableId={cardId.id} index={index} type="card">
       {(provided, snapshot) => (
         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
           <StyledCard

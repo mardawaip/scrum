@@ -3,8 +3,8 @@ import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import AppsIcon from '@mui/icons-material/Apps';
 import { useSelector } from 'react-redux';
-import { selectData } from '../store/dataSlice';
 import { Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 function AplikasiHeader(props) {
   const { boardId } = props;

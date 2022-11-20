@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import BoardAddCard from '../board-card/BoardAddCard';
 import BoardCard from '../board-card/BoardCard';
 import BoardListHeader from './BoardListHeader';
+import { useParams } from 'react-router-dom';
 // import { selectListById } from '../../store/listsSlice';
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -19,6 +20,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 function BoardList(props) {
   const { listId, cardIds, list } = props;
   const contentScrollEl = useRef(null);
+  const routeParams = useParams();
   // const list = []; //useSelector((state) => selectListById(state, listId));
 
   function handleCardAdded() {
@@ -64,7 +66,9 @@ function BoardList(props) {
                       ref={_provided.innerRef}
                       className="flex flex-col w-full h-full px-12 min-h-1"
                     >
-                      {cardIds.map((cardId, index) => (
+                      {cardIds
+                      .filter((e) => routeParams.taskId ? [null, undefined ,'', routeParams.taskId].includes(e.tasks_id) : e)
+                      .map((cardId, index) => (
                         <BoardCard key={cardId} cardId={cardId} index={index} list={list} />
                       ))}
                       {_provided.placeholder}

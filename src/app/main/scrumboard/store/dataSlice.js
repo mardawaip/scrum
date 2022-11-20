@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import axios from 'axios';
 import history from '@history';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 export const getMembers = createAsyncThunk(
 	'dataScrum/getMembers',
@@ -53,7 +54,7 @@ export const newBoard = createAsyncThunk(
 		const data = await response.data;
 
 		history.push({
-			pathname: `/scrumboard/boards/${data.aplikasi_id}`,
+			pathname: `/scrumboard/aplikasi/${data.aplikasi_id}`,
 		});
 
 		return data;
@@ -66,6 +67,7 @@ export const updateBoard = createAsyncThunk(
 		dispatch(setLoading(true));
 		const response = await axios.put(`/api/scrum/updateScrum/${routeParams.id}`, { ...routeParams });
 		const data = await response.data;
+		dispatch(getBoard(routeParams.id));
 
 		return { data };
 	}
@@ -115,6 +117,7 @@ export const removeTask = createAsyncThunk(
 		return id;
 	}
 );
+
 export const reorderList = createAsyncThunk(
 	'dataScrum/reorderList',
 	async (task, { dispatch, getState }) => {
@@ -123,6 +126,63 @@ export const reorderList = createAsyncThunk(
 		const data = await response.data;
 		dispatch(setLoading(false));
 		dispatch(getDetailAplikasi());
+	  	return data;
+	}
+);
+
+export const newCard = createAsyncThunk(
+	'dataScrum/newCard',
+	async (routeParams, { dispatch, getState }) => {
+		dispatch(setLoading(true));
+		const response = await axios.post('/api/scrum/newCard', routeParams);
+		const data = await response.data;
+		dispatch(getBoard(routeParams.boardId));
+	  	return data;
+	}
+);
+
+export const updateCard = createAsyncThunk(
+	'dataScrum/updateCard',
+	async (routeParams, { dispatch, getState }) => {
+		dispatch(setLoading(true));
+		const response = await axios.post('/api/scrum/updateCard', routeParams);
+		const data = await response.data;
+		dispatch(getBoard(routeParams.scrum_id));
+
+		dispatch(
+			showMessage({
+			  message: 'Todo berhasil tersimpan',
+			  autoHideDuration: 2000,
+			  variant: 'success',
+			  anchorOrigin: {
+				vertical: 'top',
+				horizontal: 'right',
+			  },
+			})
+		  );
+
+	  	return data;
+	}
+); 
+
+export const reorderListCard = createAsyncThunk(
+	'dataScrum/reorderListCard',
+	async (routeParams, { dispatch, getState }) => {
+		dispatch(setLoading(true));
+		const response = await axios.post('/api/scrum/reorderListCard', routeParams);
+		const data = await response.data;
+		// dispatch(getBoard(routeParams.boardId));
+	  	return data;
+	}
+);
+
+export const reorderCard = createAsyncThunk(
+	'dataScrum/reorderCard',
+	async (routeParams, { dispatch, getState }) => {
+		dispatch(setLoading(true));
+		const response = await axios.post('/api/scrum/reorderCard', routeParams);
+		const data = await response.data;
+		dispatch(getBoard(routeParams.boardId));
 	  	return data;
 	}
 );

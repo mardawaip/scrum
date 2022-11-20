@@ -5,10 +5,12 @@ import BoardTitle from './BoardTitle';
 import AppsIcon from '@mui/icons-material/Apps';
 import { IconButton } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function BoardHeader(props) {
   const { boardId } = props;
+  const routeParams = useParams();
+  const { taskId } = routeParams;
   const location = window.location.pathname.split('/')[2];
   
   return (
@@ -21,6 +23,19 @@ function BoardHeader(props) {
       </div>
 
       <div className="flex items-center justify-end space-x-12">
+        {taskId && (
+          <Button
+            variant="contained"
+            color="info"
+            className="whitespace-nowrap"
+            component={NavLinkAdapter}
+            to={`/scrumboard/boards/${boardId}`}
+            startIcon={<FuseSvgIcon size={20}>heroicons-outline:table</FuseSvgIcon>}
+            size="small"
+          >
+            Hapus Filter Task
+          </Button>
+        )}
         <Button
           disabled={location === 'aplikasi'}
           className="whitespace-nowrap"
