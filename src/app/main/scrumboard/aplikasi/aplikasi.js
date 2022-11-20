@@ -66,7 +66,7 @@ function Aplikasi() {
                 <div className="w-full">
                     <Grid container spacing={1}>
                         <Grid item xs={12} sm={12} xl={12}>
-                            <ListHeader/>
+                            <ListHeader acc={acc} count={count}/>
                         </Grid>
                         <Grid item xs={12} sm={8} xl={10}>
                             <Card>

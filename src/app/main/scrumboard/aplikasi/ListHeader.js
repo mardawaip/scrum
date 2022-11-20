@@ -7,10 +7,8 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 
-function ListHeader(props) {
+function ListHeader({ acc, count }) {
   const dispatch = useDispatch();
-  const { tasks } = useSelector(({ scrumboardApp }) => scrumboardApp.data.aplikasi);
-  const count = tasks.filter((opt) => opt.type === 'task').length;
 
   const openSection = () => {
     dispatch(setOpenDialog({ tasks_id: '', title: '', type: 'section' }));
@@ -42,7 +40,7 @@ function ListHeader(props) {
             color="text.secondary"
             size="small"
         >
-            {`${count} remaining tasks`}
+            {`(${acc}/${count}) remaining tasks`}
         </Typography>
       </div>
 

@@ -12,6 +12,7 @@ function SectionListItem(props) {
   const dispatch = useDispatch()
   const { data, index } = props;
   
+  const progres = (data.progres/data.count)*100;
 
   return (
     <Draggable draggableId={data.id} index={index} type="list">
@@ -39,9 +40,9 @@ function SectionListItem(props) {
             </div>
             <ListItemText
               classes={{ root: 'm-0', primary: 'font-semibold text-16 truncate' }}
-              primary={data.title}
+              primary={`${data.title} (${data.progres}/${data.count})`}
               secondary={(
-                <LinearProgressWithLabel value={data.progres || 0} />
+                <LinearProgressWithLabel value={progres || 0} />
               )}
             />
           </ListItem>
