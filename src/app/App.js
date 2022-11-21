@@ -17,10 +17,11 @@ import withAppProviders from './withAppProviders';
 import { AuthProvider } from './auth/AuthContext';
 
 import axios from 'axios';
+import AppConfig from './configs/AppConfig';
 /**
  * Axios HTTP Request defaults
  */
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = AppConfig.baseUrl; //"http://localhost:8000";
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 
