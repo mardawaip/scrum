@@ -1,0 +1,45 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }} dinas
+      if: ${{ endsWith(github.event.head_commit.message, 'BUILD') }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: persiapan install cross env
+      if: ${{ endsWith(github.event.head_commit.message, 'BUILD') }}    
+      run: yarn install
+    - name: build untuk BUILD
+      if: ${{ endsWith(github.event.head_commit.message, 'BUILD') }}    
+      run: yarn build --if-present
+
+    - name: 📂 Sync files BUILD
+      if: ${{ endsWith(github.event.head_commit.message, 'BUILD') }}
+      uses: burnett01/rsync-deployments@4.1
+      with:
+        switches: -avzr --delete --exclude=".git" --exclude=".github"
+        path: /build
+        remote_path: /usr/share/nginx/www/arif/scrum
+        remote_host: ${{ secrets.HOST }}
+        remote_user: ${{ secrets.USERNAME }}
+        remote_key: ${{ secrets.PRIVATE_KEY }}
