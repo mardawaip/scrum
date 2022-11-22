@@ -1,7 +1,7 @@
 const setBaseUrl = () => {
     let link;
     switch (window.location.hostname) {
-        case 'scrum.mardawa.id/': link = 'https://scrum-api.mardawa.id/'; break;
+        case 'scrum.mardawa.id': link = 'https://scrum-api.mardawa.id/'; break;
     
         default: link = 'http://localhost:8000/'; break;
     }
