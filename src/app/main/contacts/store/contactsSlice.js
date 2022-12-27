@@ -11,7 +11,7 @@ import { addContact, removeContact, updateContact } from './contactSlice';
 export const getContacts = createAsyncThunk(
   'contactsApp/contacts/getContacts',
   async (params, { getState }) => {
-    const response = await axios.get('/api/contacts');
+    const response = await axios.get('/api/users');
 
     const data = await response.data;
 
@@ -40,10 +40,10 @@ export const selectGroupedFilteredContacts = createSelector(
   [selectFilteredContacts],
   (contacts) => {
     return contacts
-      .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
+      .sort((a, b) => a.first_name.localeCompare(b.first_name, 'es', { sensitivity: 'base' }))
       .reduce((r, e) => {
         // get first letter of name of current element
-        const group = e.name[0];
+        const group = e.first_name[0];
         // if there is no property in accumulator with this letter create it
         if (!r[group]) r[group] = { group, children: [e] };
         // if there is push current element to children array for that letter
@@ -73,7 +73,7 @@ const contactsSlice = createSlice({
     [removeContact.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
     [getContacts.fulfilled]: (state, action) => {
       const { data, routeParams } = action.payload;
-      contactsAdapter.setAll(state, data);
+      contactsAdapter.setAll(state, data.data);
       state.searchText = '';
     },
   },

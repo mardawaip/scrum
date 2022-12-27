@@ -6,33 +6,35 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import FormHelperText from '@mui/material/FormHelperText';
 import jwtService from '../../auth/services/jwtService';
 import AppConfig from 'app/configs/AppConfig';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 /**
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-  displayName: yup.string().required('You must enter display name'),
-  email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+  first_name: yup.string().required('Anda harus memasukkan nama tampilan'),
+  last_name: yup.string().required('Anda harus memasukkan nama belakang'),
+  email: yup.string().email('Anda harus memasukkan email yang valid').required('Anda harus memasukkan email'),
   password: yup
     .string()
-    .required('Please enter your password.')
-    .min(8, 'Password is too short - should be 8 chars minimum.'),
-  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-  acceptTermsConditions: yup.boolean().oneOf([true], 'The terms and conditions must be accepted.'),
+    .required('Silakan masukkan kata sandi Anda.')
+    .min(8, 'Kata sandi terlalu pendek - minimal harus 8 karakter.'),
+  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Kata sandi harus sesuai'),
+  acceptTermsConditions: yup.boolean().oneOf([true], 'Syarat dan ketentuan harus diterima.'),
 });
 
 const defaultValues = {
-  displayName: '',
+  first_name: '',
+  last_name: '',
   email: '',
   password: '',
   passwordConfirm: '',
@@ -40,6 +42,7 @@ const defaultValues = {
 };
 
 function SignUpPage() {
+  const dispatch = useDispatch();
   const { control, formState, handleSubmit, reset } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -48,23 +51,33 @@ function SignUpPage() {
 
   const { isValid, dirtyFields, errors, setError } = formState;
 
-  function onSubmit({ displayName, password, email }) {
+  function onSubmit({ first_name, last_name, password, email, passwordConfirm }) {
     jwtService
       .createUser({
-        displayName,
+        first_name,
+        last_name,
         password,
         email,
+        password_confirmation: passwordConfirm,
+        roles_id: 2
       })
       .then((user) => {
-        // No need to do anything, registered user data will be set at app/auth/AuthContext
+        dispatch(showMessage({ message: "Registrasi Berhasil, Silakan hubungin admin untuk membuka akses akun anda", variant: "success" }))
+        setTimeout(() => {
+          window.location.href = "/sign-in";
+        }, 1000);
       })
       .catch((_errors) => {
-        _errors.forEach((error) => {
-          setError(error.type, {
-            type: 'manual',
-            message: error.message,
+        if(_errors.message){
+          dispatch(showMessage({ message: _errors.message, variant: "error" }))
+        }else{
+          _errors.forEach((error) => {
+            setError(error.type, {
+              type: 'manual',
+              message: error.message,
+            });
           });
-        });
+        }
       });
   }
 
@@ -75,12 +88,12 @@ function SignUpPage() {
           <img className="w-48" src={AppConfig.logo} alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-            Sign up
+            Daftar
           </Typography>
           <div className="flex items-baseline mt-2 font-medium">
-            <Typography>Already have an account?</Typography>
+            <Typography>Sudah memiliki akun?</Typography>
             <Link className="ml-4" to="/sign-in">
-              Sign in
+              Login
             </Link>
           </div>
 
@@ -91,17 +104,36 @@ function SignUpPage() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <Controller
-              name="displayName"
+              name="first_name"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Display name"
+                  label="Nama Depan"
                   autoFocus
                   type="name"
-                  error={!!errors.displayName}
-                  helperText={errors?.displayName?.message}
+                  error={!!errors.first_name}
+                  helperText={errors?.first_name?.message}
+                  variant="outlined"
+                  required
+                  fullWidth
+                />
+              )}
+            />
+            
+            <Controller
+              name="last_name"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="Nama Belakang"
+                  autoFocus
+                  type="name"
+                  error={!!errors.last_name}
+                  helperText={errors?.last_name?.message}
                   variant="outlined"
                   required
                   fullWidth
@@ -169,7 +201,7 @@ function SignUpPage() {
               render={({ field }) => (
                 <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
                   <FormControlLabel
-                    label="I agree to the Terms of Service and Privacy Policy"
+                    label="Saya menyetujui Ketentuan Layanan dan Kebijakan Privasi"
                     control={<Checkbox size="small" {...field} />}
                   />
                   <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
@@ -242,14 +274,14 @@ function SignUpPage() {
 
         <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-gray-100">
-            <div>Welcome to</div>
-            <div>our community</div>
+            <div>Selamat Datang</div>
+            <div>{ AppConfig.title }</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-gray-400">
-            Fuse helps developers to build organized and well coded dashboards full of beautiful and
-            rich modules. Join us and start building your application today.
+            { AppConfig.sub_title }<br/>
+            { AppConfig.client }
           </div>
-          <div className="flex items-center mt-32">
+          {/* <div className="flex items-center mt-32">
             <AvatarGroup
               sx={{
                 '& .MuiAvatar-root': {
@@ -266,7 +298,7 @@ function SignUpPage() {
             <div className="ml-16 font-medium tracking-tight text-gray-400">
               More than 17k people joined us, it's your turn
             </div>
-          </div>
+          </div> */}
         </div>
       </Box>
     </div>

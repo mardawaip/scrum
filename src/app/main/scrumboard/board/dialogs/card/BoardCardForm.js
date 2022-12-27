@@ -39,7 +39,7 @@ import CardChecklist from './checklist/CardChecklist';
 // import MembersMenu from './toolbar/MembersMenu';
 // import CheckListMenu from './toolbar/CheckListMenu';
 import OptionsMenu from './toolbar/OptionsMenu';
-import { FormControl, FormLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, FormLabel, ListSubheader, MenuItem, Select } from '@mui/material';
 
 function BoardCardForm(props) {
   const dispatch = useDispatch();
@@ -149,7 +149,7 @@ function BoardCardForm(props) {
                   <Select {...field} variant="outlined" fullWidth>
                     {
                       board?.tasks.map((opt, key) => {
-                        return ( <MenuItem key={key} value={opt.tasks_id}>{ opt.title }</MenuItem> )
+                        return opt.type === 'section' ? (<ListSubheader style={{ textAlign: 'center', backgroundColor: '#ffffff12' }}>{ opt.title }</ListSubheader>) : ( <MenuItem key={key} value={opt.tasks_id}>{ opt.title }</MenuItem> )
                       })
                     }
                   </Select>

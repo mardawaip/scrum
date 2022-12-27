@@ -5,6 +5,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
+import { Chip } from '@mui/material';
 
 function ContactListItem(props) {
   const { contact } = props;
@@ -18,11 +19,11 @@ function ContactListItem(props) {
         to={`/contacts/${contact.id}`}
       >
         <ListItemAvatar>
-          <Avatar alt={contact.name} src={contact.avatar} />
+          <Avatar alt={contact.first_name} src={contact.avatar} />
         </ListItemAvatar>
         <ListItemText
           classes={{ root: 'm-0', primary: 'font-medium leading-5 truncate' }}
-          primary={contact.name}
+          primary={(<Typography>{contact.first_name}&nbsp;{ !contact.email_verified_at && <Chip label="Belum Verifikasi" color="warning" size="small" /> }</Typography>)}
           secondary={
             <>
               <Typography
@@ -31,7 +32,7 @@ function ContactListItem(props) {
                 variant="body2"
                 color="text.secondary"
               >
-                {contact.title}
+                {contact.email}
               </Typography>
             </>
           }

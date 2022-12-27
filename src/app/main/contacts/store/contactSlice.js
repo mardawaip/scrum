@@ -7,13 +7,13 @@ export const getContact = createAsyncThunk(
   'contactsApp/task/getContact',
   async (id, { dispatch, getState }) => {
     try {
-      const response = await axios.get(`/api/contacts/${id}`);
+      const response = await axios.post(`/api/users/${id}`);
 
       const data = await response.data;
 
       return data;
     } catch (error) {
-      history.push({ pathname: `/apps/contacts` });
+      history.push({ pathname: `/contacts` });
 
       return null;
     }

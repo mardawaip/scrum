@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import Avatar from '@mui/material/Avatar';
@@ -15,6 +15,7 @@ import _ from '@lodash';
 import { getContact, selectContact } from '../store/contactSlice';
 import { selectCountries } from '../store/countriesSlice';
 import { selectTags } from '../store/tagsSlice';
+import { Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
 const ContactView = () => {
   const contact = useSelector(selectContact);
@@ -22,6 +23,7 @@ const ContactView = () => {
   const tags = useSelector(selectTags);
   const routeParams = useParams();
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getContact(routeParams.id));
@@ -29,6 +31,14 @@ const ContactView = () => {
 
   function getCountryByIso(iso) {
     return countries.find((country) => country.iso === iso);
+  }
+
+  const handleVerifikasi = () => {
+
+  }
+
+  const handleClose = () => {
+    setOpen(false)
   }
 
   if (!contact) {
@@ -51,6 +61,18 @@ const ContactView = () => {
           />
         )}
       </Box>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogContent>
+          <DialogContentText>Apakah anda yakin mengverifikais akun ini ?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button size="small" variant="outlined" color="inherit" onClick={handleClose}>Tidak</Button>
+          <Button size="small" variant="contained" color="info">Ya</Button>
+        </DialogActions>
+      </Dialog>
       <div className="relative flex flex-col flex-auto items-center p-24 pt-0 sm:p-48 sm:pt-0">
         <div className="w-full max-w-3xl">
           <div className="flex flex-auto items-end -mt-64">
@@ -64,22 +86,26 @@ const ContactView = () => {
               }}
               className="w-128 h-128 text-64 font-bold"
               src={contact.avatar}
-              alt={contact.name}
+              alt={contact.first_name}
             >
-              {contact.name.charAt(0)}
+              {contact.first_name.charAt(0)}
             </Avatar>
             <div className="flex items-center ml-auto mb-4">
-              <Button variant="contained" color="secondary" component={NavLinkAdapter} to="edit">
+              <Button variant="contained" size="small" color="warning" onClick={handleVerifikasi}>
+                <FuseSvgIcon size={20}>heroicons-outline:check-circle</FuseSvgIcon>
+                <span className="mx-8">Verifikasi</span>
+              </Button>&nbsp;
+              <Button variant="contained" size="small" color="info" component={NavLinkAdapter} to="edit">
                 <FuseSvgIcon size={20}>heroicons-outline:pencil-alt</FuseSvgIcon>
                 <span className="mx-8">Edit</span>
               </Button>
             </div>
           </div>
 
-          <Typography className="mt-12 text-4xl font-bold truncate">{contact.name}</Typography>
+          <Typography className="mt-12 text-4xl font-bold truncate">{contact.first_name}</Typography>
 
           <div className="flex flex-wrap items-center mt-8">
-            {contact.tags.map((id) => (
+            {contact.tags?.map((id) => (
               <Chip
                 key={id}
                 label={_.find(tags, { id }).title}
@@ -99,14 +125,14 @@ const ContactView = () => {
               </div>
             )}
 
-            {contact.company && (
+            {/* {contact.company && (
               <div className="flex items-center">
                 <FuseSvgIcon>heroicons-outline:office-building</FuseSvgIcon>
                 <div className="ml-24 leading-6">{contact.company}</div>
               </div>
-            )}
+            )} */}
 
-            {contact.emails.length && contact.emails.some((item) => item.email.length > 0) && (
+            {/* {contact.emails.length && contact.emails.some((item) => item.email.length > 0) && (
               <div className="flex">
                 <FuseSvgIcon>heroicons-outline:mail</FuseSvgIcon>
                 <div className="min-w-0 ml-24 space-y-4">
@@ -135,9 +161,9 @@ const ContactView = () => {
                   )}
                 </div>
               </div>
-            )}
+            )} */}
 
-            {contact.phoneNumbers.length &&
+            {/* {contact.phoneNumbers.length &&
               contact.phoneNumbers.some((item) => item.phoneNumber.length > 0) && (
                 <div className="flex">
                   <FuseSvgIcon>heroicons-outline:phone</FuseSvgIcon>
@@ -150,7 +176,7 @@ const ContactView = () => {
                               className="hidden sm:flex w-24 h-16 overflow-hidden"
                               sx={{
                                 background:
-                                  "url('/assets/images/apps/contacts/flags.png') no-repeat 0 0",
+                                  "url('/assets/images/contacts/flags.png') no-repeat 0 0",
                                 backgroundSize: '24px 3876px',
                                 backgroundPosition: getCountryByIso(item.country)?.flagImagePos,
                               }}
@@ -175,25 +201,25 @@ const ContactView = () => {
                     )}
                   </div>
                 </div>
-              )}
+              )} */}
 
-            {contact.address && (
+            {/* {contact.address && (
               <div className="flex items-center">
                 <FuseSvgIcon>heroicons-outline:location-marker</FuseSvgIcon>
                 <div className="ml-24 leading-6">{contact.address}</div>
               </div>
-            )}
+            )} */}
 
-            {contact.birthday && (
+            {/* {contact.birthday && (
               <div className="flex items-center">
                 <FuseSvgIcon>heroicons-outline:cake</FuseSvgIcon>
                 <div className="ml-24 leading-6">
                   {format(new Date(contact.birthday), 'MMMM d, y')}
                 </div>
               </div>
-            )}
+            )} */}
 
-            {contact.notes && (
+            {/* {contact.notes && (
               <div className="flex">
                 <FuseSvgIcon>heroicons-outline:menu-alt-2</FuseSvgIcon>
                 <div
@@ -201,7 +227,7 @@ const ContactView = () => {
                   dangerouslySetInnerHTML={{ __html: contact.notes }}
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

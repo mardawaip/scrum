@@ -11,8 +11,8 @@ import ProjectDashboardAppHeader from './ProjectDashboardAppHeader';
 import reducer from './store';
 import { getWidgets, selectWidgets } from './store/widgetsSlice';
 import HomeTab from './tabs/home/HomeTab';
-import TeamTab from './tabs/team/TeamTab';
-import BudgetTab from './tabs/budget/BudgetTab';
+// import TeamTab from './tabs/team/TeamTab';
+// import BudgetTab from './tabs/budget/BudgetTab';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -25,15 +25,15 @@ function ProjectDashboardApp(props) {
   const dispatch = useDispatch();
   const widgets = useSelector(selectWidgets);
 
-  const [tabValue, setTabValue] = useState(0);
+  // const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     dispatch(getWidgets());
   }, [dispatch]);
 
-  function handleChangeTab(event, value) {
-    setTabValue(value);
-  }
+  // function handleChangeTab(event, value) {
+  //   setTabValue(value);
+  // }
 
   if (_.isEmpty(widgets)) {
     return null;
@@ -44,7 +44,8 @@ function ProjectDashboardApp(props) {
       header={<ProjectDashboardAppHeader />}
       content={
         <div className="w-full p-12 pt-16 sm:pt-24 lg:ltr:pr-0 lg:rtl:pl-0">
-          <Tabs
+          <HomeTab/>
+          {/* <Tabs
             value={tabValue}
             onChange={handleChangeTab}
             indicatorColor="secondary"
@@ -77,10 +78,10 @@ function ProjectDashboardApp(props) {
               disableRipple
               label="Team"
             />
-          </Tabs>
-          {tabValue === 0 && <HomeTab />}
-          {tabValue === 1 && <BudgetTab />}
-          {tabValue === 2 && <TeamTab />}
+          </Tabs> */}
+          {/* {tabValue === 0 && <HomeTab />} */}
+          {/* {tabValue === 1 && <BudgetTab />}
+          {tabValue === 2 && <TeamTab />} */}
         </div>
       }
     />

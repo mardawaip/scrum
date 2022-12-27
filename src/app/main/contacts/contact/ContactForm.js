@@ -76,7 +76,7 @@ const ContactForm = (props) => {
   function onSubmit(data) {
     if (routeParams.id === 'new') {
       dispatch(addContact(data)).then(({ payload }) => {
-        navigate(`/apps/contacts/${payload.id}`);
+        navigate(`/contacts/${payload.id}`);
       });
     } else {
       dispatch(updateContact(data));
@@ -85,7 +85,7 @@ const ContactForm = (props) => {
 
   function handleRemoveContact() {
     dispatch(removeContact(contact.id)).then(() => {
-      navigate('/apps/contacts');
+      navigate('/contacts');
     });
   }
 
@@ -178,9 +178,9 @@ const ContactForm = (props) => {
                     }}
                     className="object-cover w-full h-full text-64 font-bold"
                     src={value}
-                    alt={contact.name}
+                    alt={contact.first_name}
                   >
-                    {contact.name.charAt(0)}
+                    {contact.first_name.charAt(0)}
                   </Avatar>
                 </Box>
               )}
@@ -198,8 +198,8 @@ const ContactForm = (props) => {
               label="Name"
               placeholder="Name"
               id="name"
-              error={!!errors.name}
-              helperText={errors?.name?.message}
+              error={!!errors.first_name}
+              helperText={errors?.first_name?.message}
               variant="outlined"
               required
               fullWidth
@@ -290,19 +290,19 @@ const ContactForm = (props) => {
             />
           )}
         />
-        <Controller
+        {/* <Controller
           control={control}
           name="emails"
           render={({ field }) => <ContactEmailSelector className="mt-32" {...field} />}
-        />
+        /> */}
 
-        <Controller
+        {/* <Controller
           control={control}
           name="phoneNumbers"
           render={({ field }) => <PhoneNumberSelector className="mt-32" {...field} />}
-        />
+        /> */}
 
-        <Controller
+        {/* <Controller
           control={control}
           name="address"
           render={({ field }) => (
@@ -325,8 +325,8 @@ const ContactForm = (props) => {
               }}
             />
           )}
-        />
-        <Controller
+        /> */}
+        {/* <Controller
           control={control}
           name="birthday"
           render={({ field }) => (
@@ -358,8 +358,8 @@ const ContactForm = (props) => {
               )}
             />
           )}
-        />
-        <Controller
+        /> */}
+        {/* <Controller
           control={control}
           name="notes"
           render={({ field }) => (
@@ -386,7 +386,7 @@ const ContactForm = (props) => {
               }}
             />
           )}
-        />
+        /> */}
       </div>
 
       <Box

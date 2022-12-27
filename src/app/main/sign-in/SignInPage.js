@@ -17,6 +17,8 @@ import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 import jwtService from '../../auth/services/jwtService';
 import AppConfig from 'app/configs/AppConfig';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 /**
  * Form Validation Schema
@@ -36,6 +38,7 @@ const defaultValues = {
 };
 
 function SignInPage() {
+  const dispatch = useDispatch();
   const { control, formState, handleSubmit, setError, setValue } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -56,12 +59,16 @@ function SignInPage() {
         // No need to do anything, user data will be set at app/auth/AuthContext
       })
       .catch((_errors) => {
-        _errors.forEach((error) => {
-          setError(error.type, {
-            type: 'manual',
-            message: error.message,
+        if(_errors.message){
+          dispatch(showMessage({ message: _errors.message, variant: "warning" }))
+        }else{
+          _errors.forEach((error) => {
+            setError(error.type, {
+              type: 'manual',
+              message: error.message,
+            });
           });
-        });
+        }
       });
   }
 
@@ -241,7 +248,7 @@ function SignInPage() {
             { AppConfig.sub_title }<br/>
             { AppConfig.client }
           </div>
-          <div className="flex items-center mt-32">
+          {/* <div className="flex items-center mt-32">
             <AvatarGroup
               sx={{
                 '& .MuiAvatar-root': {
@@ -258,7 +265,7 @@ function SignInPage() {
             <div className="ml-16 font-medium tracking-tight text-gray-400">
               More than 17k people joined us, it's your turn
             </div>
-          </div>
+          </div> */}
         </div>
       </Box>
     </div>

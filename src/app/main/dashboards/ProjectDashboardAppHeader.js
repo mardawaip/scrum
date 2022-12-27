@@ -14,6 +14,9 @@ function ProjectDashboardAppHeader(props) {
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
   const user = useSelector(selectUser);
+  const d = new Date();
+  const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+  const dateNow = `${d.getDate()} / ${bulan[d.getMonth()]} / ${d.getFullYear()}`;
 
   const [selectedProject, setSelectedProject] = useState({
     id: 1,
@@ -58,20 +61,20 @@ function ProjectDashboardAppHeader(props) {
           </Avatar>
           <div className="flex flex-col min-w-0 mx-16">
             <Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-              {`Welcome back, ${user.data.displayName}!`}
+              {`Selemat datang, ${user.data.displayName}`}
             </Typography>
 
             <div className="flex items-center">
               <FuseSvgIcon size={20} color="action">
-                heroicons-solid:bell
+                heroicons-solid:calendar
               </FuseSvgIcon>
               <Typography className="mx-6 leading-6 truncate" color="text.secondary">
-                You have 2 new messages and 15 new tasks
+                { dateNow }
               </Typography>
             </div>
           </div>
         </div>
-        <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
+        {/* <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
           <Button
             className="whitespace-nowrap"
             variant="contained"
@@ -88,9 +91,9 @@ function ProjectDashboardAppHeader(props) {
           >
             Settings
           </Button>
-        </div>
+        </div> */}
       </div>
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <Button
           onClick={handleOpenProjectMenu}
           className="flex items-center border border-solid border-b-0 rounded-t-xl rounded-b-0 h-40 px-16 text-13 sm:text-16"
@@ -125,7 +128,7 @@ function ProjectDashboardAppHeader(props) {
               </MenuItem>
             ))}
         </Menu>
-      </div>
+      </div> */}
     </div>
   );
 }

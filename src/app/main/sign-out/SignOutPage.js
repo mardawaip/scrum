@@ -18,7 +18,7 @@ function SignOutPage() {
           <img className="w-48 mx-auto" src={AppConfig.logo} alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight text-center">
-            You have signed out!
+            Anda telah keluar!
           </Typography>
         </div>
       </Paper>
