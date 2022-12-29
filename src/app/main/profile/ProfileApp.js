@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import AboutTab from './tabs/AboutTab';
-import PhotosVideosTab from './tabs/PhotosVideosTab';
+import Pengaturan from './tabs/Pengaturan';
 import TimelineTab from './tabs/TimelineTab';
 import { useThemeMediaQuery } from '@fuse/hooks';
 
@@ -108,7 +108,7 @@ function ProfileApp() {
                 <Tab
                   className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12 "
                   disableRipple
-                  label="Photos & Videos"
+                  label="Pengaturan"
                 />
               </Tabs>
             </div>
@@ -119,7 +119,7 @@ function ProfileApp() {
         <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
           {selectedTab === 0 && <TimelineTab />}
           {selectedTab === 1 && <AboutTab />}
-          {selectedTab === 2 && <PhotosVideosTab />}
+          {selectedTab === 2 && <Pengaturan />}
         </div>
       }
       scroll={isMobile ? 'normal' : 'page'}

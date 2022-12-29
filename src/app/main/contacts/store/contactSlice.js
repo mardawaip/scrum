@@ -23,7 +23,7 @@ export const getContact = createAsyncThunk(
 export const addContact = createAsyncThunk(
   'contactsApp/contacts/addContact',
   async (contact, { dispatch, getState }) => {
-    const response = await axios.post('/api/contacts', contact);
+    const response = await axios.post('/api/users', contact);
 
     const data = await response.data;
 
@@ -34,7 +34,7 @@ export const addContact = createAsyncThunk(
 export const updateContact = createAsyncThunk(
   'contactsApp/contacts/updateContact',
   async (contact, { dispatch, getState }) => {
-    const response = await axios.put(`/api/contacts/${contact.id}`, contact);
+    const response = await axios.put(`/api/users/${contact.id}`, contact);
 
     const data = await response.data;
 
@@ -45,8 +45,7 @@ export const updateContact = createAsyncThunk(
 export const removeContact = createAsyncThunk(
   'contactsApp/contacts/removeContact',
   async (id, { dispatch, getState }) => {
-    const response = await axios.delete(`/api/contacts/${id}`);
-
+    const response = await axios.delete(`/api/users/${id}`);
     await response.data;
 
     return id;

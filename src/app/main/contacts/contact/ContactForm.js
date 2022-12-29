@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import FuseLoading from '@fuse/core/FuseLoading';
 import _ from '@lodash';
 import * as yup from 'yup';
@@ -29,13 +29,31 @@ import { selectCountries } from '../store/countriesSlice';
 import { selectTags } from '../store/tagsSlice';
 import ContactEmailSelector from './email-selector/ContactEmailSelector';
 import PhoneNumberSelector from './phone-number-selector/PhoneNumberSelector';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
+import { getContacts } from '../store/contactsSlice';
 
 /**
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-  name: yup.string().required('You must enter a name'),
+  first_name: yup.string().required('Anda harus memasukkan nama tampilan'),
+  last_name: yup.string().required('Anda harus memasukkan nama belakang'),
+  email: yup.string().email('Anda harus memasukkan email yang valid').required('Anda harus memasukkan email'),
+  // password: yup
+  //   .string()
+  //   .required('Silakan masukkan kata sandi Anda.')
+  //   .min(8, 'Kata sandi terlalu pendek - minimal harus 8 karakter.'),
+  // password_confirmation: yup.string().oneOf([yup.ref('password'), null], 'Kata sandi harus sesuai'),
 });
+
+const defaultValues = {
+  first_name: '',
+  last_name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+}
 
 const ContactForm = (props) => {
   const contact = useSelector(selectContact);
@@ -44,8 +62,10 @@ const ContactForm = (props) => {
   const routeParams = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
+    defaultValues,
     mode: 'onChange',
     resolver: yupResolver(schema),
   });
@@ -76,17 +96,31 @@ const ContactForm = (props) => {
   function onSubmit(data) {
     if (routeParams.id === 'new') {
       dispatch(addContact(data)).then(({ payload }) => {
+        reset({})
         navigate(`/contacts/${payload.id}`);
+        dispatch(showMessage({ message: "Tambah Pengguna Berhasil", variant: "success" }))
       });
     } else {
-      dispatch(updateContact(data));
+      dispatch(updateContact(data)).then(() => {
+        dispatch(showMessage({ message: "Edit Pengguna Berhasil", variant: "success" }))
+      });
     }
   }
 
   function handleRemoveContact() {
     dispatch(removeContact(contact.id)).then(() => {
       navigate('/contacts');
+      dispatch(getContacts());
+      handleClose()
     });
+  }
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
   }
 
   if (_.isEmpty(form) || !contact) {
@@ -180,7 +214,7 @@ const ContactForm = (props) => {
                     src={value}
                     alt={contact.first_name}
                   >
-                    {contact.first_name.charAt(0)}
+                    {contact.first_name?.charAt(0)}
                   </Avatar>
                 </Box>
               )}
@@ -190,14 +224,14 @@ const ContactForm = (props) => {
 
         <Controller
           control={control}
-          name="name"
+          name="first_name"
           render={({ field }) => (
             <TextField
               className="mt-32"
               {...field}
-              label="Name"
-              placeholder="Name"
-              id="name"
+              label="Nama"
+              placeholder="Nama"
+              id="first_name"
               error={!!errors.first_name}
               helperText={errors?.first_name?.message}
               variant="outlined"
@@ -213,8 +247,116 @@ const ContactForm = (props) => {
             />
           )}
         />
-
+        
         <Controller
+          control={control}
+          name="last_name"
+          render={({ field }) => (
+            <TextField
+              className="mt-32"
+              {...field}
+              label="Nama Belakang"
+              placeholder="Nama Belakang"
+              id="last_name"
+              error={!!errors.last_name}
+              helperText={errors?.last_name?.message}
+              variant="outlined"
+              required
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FuseSvgIcon size={20}>heroicons-solid:user-circle</FuseSvgIcon>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+        />
+        
+        <Controller
+          control={control}
+          name="email"
+          render={({ field }) => (
+            <TextField
+              className="mt-32"
+              {...field}
+              label="Email"
+              placeholder="Email"
+              id="email"
+              error={!!errors.email}
+              helperText={errors?.email?.message}
+              variant="outlined"
+              required
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FuseSvgIcon size={20}>heroicons-solid:mail</FuseSvgIcon>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+        />
+        
+        {routeParams.id === 'new' &&
+        <Controller
+          control={control}
+          name="password"
+          render={({ field }) => (
+            <TextField
+              className="mt-32"
+              {...field}
+              label="Password"
+              placeholder="Password"
+              id="password"
+              error={!!errors.password}
+              helperText={errors?.password?.message}
+              variant="outlined"
+              // required
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FuseSvgIcon size={20}>heroicons-solid:key</FuseSvgIcon>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+        />
+        }
+        
+        { routeParams.id === 'new' &&
+        <Controller
+          control={control}
+          name="password_confirmation"
+          render={({ field }) => (
+            <TextField
+              className="mt-32"
+              {...field}
+              label="Password (Confirm)"
+              placeholder="Password (Confirm)"
+              id="password_confirmation"
+              error={!!errors.password_confirmation}
+              helperText={errors?.password_confirmation?.message}
+              variant="outlined"
+              // required
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FuseSvgIcon size={20}>heroicons-solid:key</FuseSvgIcon>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+        />
+        }
+
+        {/* <Controller
           control={control}
           name="tags"
           render={({ field: { onChange, value } }) => (
@@ -239,9 +381,9 @@ const ContactForm = (props) => {
               renderInput={(params) => <TextField {...params} label="Tags" placeholder="Tags" />}
             />
           )}
-        />
+        /> */}
 
-        <Controller
+        {/* <Controller
           control={control}
           name="title"
           render={({ field }) => (
@@ -264,9 +406,9 @@ const ContactForm = (props) => {
               }}
             />
           )}
-        />
+        /> */}
 
-        <Controller
+        {/* <Controller
           control={control}
           name="company"
           render={({ field }) => (
@@ -289,7 +431,7 @@ const ContactForm = (props) => {
               }}
             />
           )}
-        />
+        /> */}
         {/* <Controller
           control={control}
           name="emails"
@@ -394,7 +536,7 @@ const ContactForm = (props) => {
         sx={{ backgroundColor: 'background.default' }}
       >
         {routeParams.id !== 'new' && (
-          <Button color="error" onClick={handleRemoveContact}>
+          <Button color="error" onClick={handleOpen}>
             Delete
           </Button>
         )}
@@ -411,6 +553,19 @@ const ContactForm = (props) => {
           Save
         </Button>
       </Box>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogContent>
+          <DialogContentText>Apakah anda yakin menghapus akun ini ?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button size="small" variant="outlined" color="inherit" onClick={handleClose}>Tidak</Button>
+          <Button size="small" variant="contained" color="info" onClick={handleRemoveContact}>Ya</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

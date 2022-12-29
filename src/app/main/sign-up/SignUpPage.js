@@ -16,6 +16,7 @@ import jwtService from '../../auth/services/jwtService';
 import AppConfig from 'app/configs/AppConfig';
 import { useDispatch } from 'react-redux';
 import { showMessage } from 'app/store/fuse/messageSlice';
+import history from '@history';
 
 /**
  * Form Validation Schema
@@ -64,7 +65,8 @@ function SignUpPage() {
       .then((user) => {
         dispatch(showMessage({ message: "Registrasi Berhasil, Silakan hubungin admin untuk membuka akses akun anda", variant: "success" }))
         setTimeout(() => {
-          window.location.href = "/sign-in";
+          history.push({ pathname: `/sign-in` });
+          // window.location.href = "/sign-in";
         }, 1000);
       })
       .catch((_errors) => {

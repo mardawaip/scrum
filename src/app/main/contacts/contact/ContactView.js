@@ -12,10 +12,11 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import Box from '@mui/system/Box';
 import format from 'date-fns/format';
 import _ from '@lodash';
-import { getContact, selectContact } from '../store/contactSlice';
+import { getContact, selectContact, updateContact } from '../store/contactSlice';
 import { selectCountries } from '../store/countriesSlice';
 import { selectTags } from '../store/tagsSlice';
 import { Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 const ContactView = () => {
   const contact = useSelector(selectContact);
@@ -34,7 +35,19 @@ const ContactView = () => {
   }
 
   const handleVerifikasi = () => {
+    const d = new Date();
+    const params = {
+      id: routeParams.id,
+      email_verified_at: `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+    }
+    dispatch(updateContact(params)).then(() => {
+      dispatch(showMessage({ message: "Verifikasi Akun Berhasil", variant: "success" }));
+      setOpen(false)
+    })
+  }
 
+  const handleOpen = () => {
+    setOpen(true)
   }
 
   const handleClose = () => {
@@ -70,7 +83,7 @@ const ContactView = () => {
         </DialogContent>
         <DialogActions>
           <Button size="small" variant="outlined" color="inherit" onClick={handleClose}>Tidak</Button>
-          <Button size="small" variant="contained" color="info">Ya</Button>
+          <Button size="small" variant="contained" color="info" onClick={handleVerifikasi}>Ya</Button>
         </DialogActions>
       </Dialog>
       <div className="relative flex flex-col flex-auto items-center p-24 pt-0 sm:p-48 sm:pt-0">
@@ -88,13 +101,14 @@ const ContactView = () => {
               src={contact.avatar}
               alt={contact.first_name}
             >
-              {contact.first_name.charAt(0)}
+              {contact.first_name?.charAt(0)}
             </Avatar>
             <div className="flex items-center ml-auto mb-4">
-              <Button variant="contained" size="small" color="warning" onClick={handleVerifikasi}>
+              {!contact.email_verified_at &&
+              <Button variant="contained" size="small" color="warning" onClick={handleOpen}>
                 <FuseSvgIcon size={20}>heroicons-outline:check-circle</FuseSvgIcon>
                 <span className="mx-8">Verifikasi</span>
-              </Button>&nbsp;
+              </Button>}&nbsp;
               <Button variant="contained" size="small" color="info" component={NavLinkAdapter} to="edit">
                 <FuseSvgIcon size={20}>heroicons-outline:pencil-alt</FuseSvgIcon>
                 <span className="mx-8">Edit</span>
