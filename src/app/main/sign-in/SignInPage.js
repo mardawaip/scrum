@@ -1,24 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import jwtService from '../../auth/services/jwtService';
 import AppConfig from 'app/configs/AppConfig';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { useDispatch } from 'react-redux';
+import { LinearProgress } from '@mui/material';
 
 /**
  * Form Validation Schema
@@ -39,6 +34,7 @@ const defaultValues = {
 
 function SignInPage() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const { control, formState, handleSubmit, setError, setValue } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -53,15 +49,19 @@ function SignInPage() {
   }, [setValue]);
 
   function onSubmit({ email, password }) {
+    setLoading(true)
     jwtService
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
+        setLoading(false)
         // No need to do anything, user data will be set at app/auth/AuthContext
       })
       .catch((_errors) => {
         if(_errors.message){
           dispatch(showMessage({ message: _errors.message, variant: "warning" }))
+          setLoading(false)
         }else{
+          setLoading(false)
           _errors.forEach((error) => {
             setError(error.type, {
               type: 'manual',
@@ -131,62 +131,18 @@ function SignInPage() {
               )}
             />
 
-            {/* <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
-              <Controller
-                name="remember"
-                control={control}
-                render={({ field }) => (
-                  <FormControl>
-                    <FormControlLabel
-                      label="Remember me"
-                      control={<Checkbox size="small" {...field} />}
-                    />
-                  </FormControl>
-                )}
-              />
-
-              <Link className="text-md font-medium" to="/pages/auth/forgot-password">
-                Forgot password?
-              </Link>
-            </div> */}
-
             <Button
               variant="contained"
               color="secondary"
               className=" w-full mt-16"
               aria-label="Sign in"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
+              disabled={ loading || _.isEmpty(dirtyFields) || !isValid}
               type="submit"
               size="large"
             >
-              Masuk
+              { loading ? "Proses..." : "Masuk" }
             </Button>
 
-            {/* <div className="flex items-center mt-32">
-              <div className="flex-auto mt-px border-t" />
-              <Typography className="mx-8" color="text.secondary">
-                Or continue with
-              </Typography>
-              <div className="flex-auto mt-px border-t" />
-            </div>
-
-            <div className="flex items-center mt-32 space-x-16">
-              <Button variant="outlined" className="flex-auto">
-                <FuseSvgIcon size={20} color="action">
-                  feather:facebook
-                </FuseSvgIcon>
-              </Button>
-              <Button variant="outlined" className="flex-auto">
-                <FuseSvgIcon size={20} color="action">
-                  feather:twitter
-                </FuseSvgIcon>
-              </Button>
-              <Button variant="outlined" className="flex-auto">
-                <FuseSvgIcon size={20} color="action">
-                  feather:github
-                </FuseSvgIcon>
-              </Button>
-            </div> */}
           </form>
         </div>
       </Paper>
@@ -248,25 +204,8 @@ function SignInPage() {
             { AppConfig.sub_title }<br/>
             { AppConfig.client }
           </div>
-          {/* <div className="flex items-center mt-32">
-            <AvatarGroup
-              sx={{
-                '& .MuiAvatar-root': {
-                  borderColor: 'primary.main',
-                },
-              }}
-            >
-              <Avatar src="assets/images/avatars/female-18.jpg" />
-              <Avatar src="assets/images/avatars/female-11.jpg" />
-              <Avatar src="assets/images/avatars/male-09.jpg" />
-              <Avatar src="assets/images/avatars/male-16.jpg" />
-            </AvatarGroup>
-
-            <div className="ml-16 font-medium tracking-tight text-gray-400">
-              More than 17k people joined us, it's your turn
-            </div>
-          </div> */}
         </div>
+
       </Box>
     </div>
   );

@@ -46,119 +46,47 @@ function AboutTab() {
     <motion.div variants={container} initial="hidden" animate="show" className="w-full">
       <div className="md:flex">
         <div className="flex flex-col flex-1 md:ltr:pr-32 md:rtl:pl-32">
-          <Card component={motion.div} variants={item} className="w-full mb-32">
-            <div className="px-32 pt-24">
+        <Card component={motion.div} variants={item} className="w-full mb-32">
+            <div className="px-32 pt-24 flex flex-between justify-between">
               <Typography className="text-2xl font-semibold leading-tight">
-                General Information
+                Info Pengguna
               </Typography>
             </div>
 
             <CardContent className="px-32 py-24">
               <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Gender</Typography>
+                <Typography className="font-semibold mb-4 text-15">Nama Depan</Typography>
+                <Typography>{general.first_name}</Typography>
+              </div>
+
+              <div className="mb-24">
+                <Typography className="font-semibold mb-4 text-15">Nama Belakang</Typography>
+                <Typography>{general.last_name}</Typography>
+              </div>
+
+              <div className="mb-24">
+                <Typography className="font-semibold mb-4 text-15">Jenis Kelamin</Typography>
                 <Typography>{general.gender}</Typography>
               </div>
 
               <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Birthday</Typography>
+                <Typography className="font-semibold mb-4 text-15">Tanggal Lahir</Typography>
                 <Typography>{general.birthday}</Typography>
               </div>
 
               <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Locations</Typography>
-
-                {general.locations.map((location) => (
-                  <div className="flex items-center" key={location}>
-                    <Typography>{location}</Typography>
-                    <FuseSvgIcon className="mx-4" size={16} color="action">
-                      heroicons-outline:location-marker
-                    </FuseSvgIcon>
-                  </div>
-                ))}
+                <Typography className="font-semibold mb-4 text-15">Alamat</Typography>
+                <Typography>{general.location}</Typography>
               </div>
 
               <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">About Me</Typography>
-                <Typography>{general.about}</Typography>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card component={motion.div} variants={item} className="w-full mb-32">
-            <div className="px-32 pt-24">
-              <Typography className="text-2xl font-semibold leading-tight">Work</Typography>
-            </div>
-
-            <CardContent className="px-32 py-24">
-              <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Occupation</Typography>
-                <Typography>{work.occupation}</Typography>
+                <Typography className="font-semibold mb-4 text-15">Ho HP</Typography>
+                <Typography>{general.phone}</Typography>
               </div>
 
               <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Skills</Typography>
-                <Typography>{work.skills}</Typography>
-              </div>
-
-              <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Jobs</Typography>
-                <table className="">
-                  <tbody>
-                    {work.jobs.map((job) => (
-                      <tr key={job.company}>
-                        <td>
-                          <Typography>{job.company}</Typography>
-                        </td>
-                        <td className="px-16">
-                          <Typography color="text.secondary">{job.date}</Typography>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card component={motion.div} variants={item} className="w-full mb-32">
-            <div className="px-32 pt-24">
-              <Typography className="text-2xl font-semibold leading-tight">Contact</Typography>
-            </div>
-
-            <CardContent className="px-32 py-24">
-              <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Address</Typography>
-                <Typography>{contact.address}</Typography>
-              </div>
-
-              <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Tel.</Typography>
-
-                {contact.tel.map((tel) => (
-                  <div className="flex items-center" key={tel}>
-                    <Typography>{tel}</Typography>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Website</Typography>
-
-                {contact.websites.map((website) => (
-                  <div className="flex items-center" key={website}>
-                    <Typography>{website}</Typography>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-24">
-                <Typography className="font-semibold mb-4 text-15">Emails</Typography>
-
-                {contact.emails.map((email) => (
-                  <div className="flex items-center" key={email}>
-                    <Typography>{email}</Typography>
-                  </div>
-                ))}
+                <Typography className="font-semibold mb-4 text-15">Web Site</Typography>
+                <Typography>{general.website}</Typography>
               </div>
             </CardContent>
           </Card>
