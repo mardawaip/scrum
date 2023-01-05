@@ -28,9 +28,9 @@ function HomeTab() {
       initial="hidden"
       animate="show"
     >
-      <motion.div variants={item}>
+      {/* <motion.div variants={item}>
         <SummaryWidget />
-      </motion.div>
+      </motion.div> */}
       <motion.div variants={item}>
         <OverdueWidget />
       </motion.div>

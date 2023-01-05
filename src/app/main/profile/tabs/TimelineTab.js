@@ -1,35 +1,19 @@
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { lighten } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { useSelector } from 'react-redux';
 
 function TimelineTab() {
   const [data, setData] = useState(null);
-
-  useEffect(() => {
-    axios.get('/api/profile/timeline').then((res) => {
-      setData(res.data);
-    });
-  }, []);
-
-  if (!data) {
-    return null;
-  }
+  const { profil_log } = useSelector(({ dataProfil }) => dataProfil.data);
 
   const container = {
     show: {
@@ -59,8 +43,9 @@ function TimelineTab() {
             </div>
 
             <CardContent className="p-0">
+              { profil_log.length === 0 && <Typography variant="caption">Belum Ada Aktifitas</Typography> }
               <List className="p-0">
-                {data.activities.map((activity) => (
+                {profil_log.map((activity) => (
                   <ListItem key={activity.id} className="px-0 space-x-12">
                     <Avatar className="" alt={activity.user.name} src={activity.user.avatar} />
                     <ListItemText

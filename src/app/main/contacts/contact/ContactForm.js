@@ -135,13 +135,13 @@ const ContactForm = (props) => {
           backgroundColor: 'background.default',
         }}
       >
-        {contact.background && (
+        {/* {contact.background && ( */}
           <img
             className="absolute inset-0 object-cover w-full h-full"
-            src={contact.background}
+            src="/assets/images/pages/profile/1534431085364.png"
             alt="user background"
           />
-        )}
+        {/* )} */}
       </Box>
 
       <div className="relative flex flex-col flex-auto items-center px-24 sm:px-48">

@@ -66,13 +66,13 @@ const ContactView = () => {
           backgroundColor: 'background.default',
         }}
       >
-        {contact.background && (
+        {/* {contact.background && ( */}
           <img
             className="absolute inset-0 object-cover w-full h-full"
-            src={contact.background}
+            src="/assets/images/pages/profile/1534431085364.png"
             alt="user background"
           />
-        )}
+        {/* )} */}
       </Box>
       <Dialog
         open={open}

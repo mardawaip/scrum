@@ -15,7 +15,7 @@ const chatsDB = userChatListDB.map((chat) => ({
   })),
 }));
 
-mock.onGet('/api/chat/contacts').reply((config) => {
+mock.onGet('/api/chat/pengguna').reply((config) => {
   return [200, contactsDB];
 });
 

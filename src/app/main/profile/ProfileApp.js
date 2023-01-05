@@ -14,7 +14,9 @@ import { useThemeMediaQuery } from '@fuse/hooks';
 import reducer from "./store";
 import withReducer from "app/store/withReducer";
 import { useDispatch } from 'react-redux';
-import { getProfil } from './store/profilSlice';
+import { getProfil, getLog } from './store/profilSlice';
+import { useSelector } from 'react-redux';
+import AppConfig from 'app/configs/AppConfig';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -32,9 +34,11 @@ function ProfileApp() {
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState(0);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const { profil } = useSelector(({ dataProfil }) => dataProfil.data);
 
   useEffect(() => {
     dispatch(getProfil());
+    dispatch(getLog());
   }, [dispatch]);
 
   function handleTabChange(event, value) {
@@ -57,15 +61,15 @@ function ProfileApp() {
                 <Avatar
                   sx={{ borderColor: 'background.paper' }}
                   className="w-128 h-128 border-4"
-                  src="assets/images/avatars/male-04.jpg"
+                  src={AppConfig.avatar}
                   alt="User avatar"
                 />
               </motion.div>
             </div>
 
             <div className="flex flex-col items-center lg:items-start mt-16 lg:mt-0 lg:ml-32">
-              <Typography className="text-lg font-bold leading-none">Brian Hughes</Typography>
-              <Typography color="text.secondary">London, UK</Typography>
+              <Typography className="text-lg font-bold leading-none">{ profil?.user?.first_name }&nbsp;{ profil?.user?.last_name }</Typography>
+              <Typography color="text.secondary">{ profil?.user?.email }</Typography>
             </div>
 
             <div className="hidden lg:flex h-32 mx-32 border-l-2" />
@@ -74,13 +78,13 @@ function ProfileApp() {
               <div className="flex flex-col items-center">
                 <Typography className="font-bold">200k</Typography>
                 <Typography className="text-sm font-medium" color="text.secondary">
-                  FOLLOWERS
+                  Proyek
                 </Typography>
               </div>
               <div className="flex flex-col items-center">
                 <Typography className="font-bold">1.2k</Typography>
                 <Typography className="text-sm font-medium" color="text.secondary">
-                  FOLLOWING
+                  Task
                 </Typography>
               </div>
             </div>

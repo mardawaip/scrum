@@ -10,10 +10,10 @@ export const getProfil = createAsyncThunk(
   return { data };
 });
 
-export const totalPenggunas = createAsyncThunk(
-  'Profil/getPengguna',
+export const getLog = createAsyncThunk(
+  'Profil/getLog',
   async (params) => {
-  const response = await axios.get('/api/totalPengguna');
+  const response = await axios.get('/api/profil/get_log');
   const data = await response.data;
 
   return { data };
@@ -76,6 +76,7 @@ const profilSlice = createSlice({
   name: 'Dashboard',
   initialState: profilsAdapter.getInitialState({
     profil: [],
+    profil_log: [],
     grafik_terdaftar: {},
     umkm_perkecamatan: {},
     widgets_pie: {
@@ -104,7 +105,11 @@ const profilSlice = createSlice({
     [getWidgetsPie.fulfilled]: (state, action) => {
 			const { data } = action.payload;
 			state.widgets_pie = data;
-		}
+		},
+    [getLog.fulfilled]: (state, action) => {
+      const { data } = action.payload;
+			state.profil_log = data;
+    }
   },
 });
 export const selectWidgets = ({ dataProfil }) => dataProfil.data;
