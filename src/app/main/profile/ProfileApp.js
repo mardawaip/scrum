@@ -5,12 +5,16 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import AboutTab from './tabs/AboutTab';
 import Pengaturan from './tabs/Pengaturan';
 import TimelineTab from './tabs/TimelineTab';
 import { useThemeMediaQuery } from '@fuse/hooks';
+import reducer from "./store";
+import withReducer from "app/store/withReducer";
+import { useDispatch } from 'react-redux';
+import { getProfil } from './store/profilSlice';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -25,8 +29,13 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function ProfileApp() {
+  const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState(0);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
+
+  useEffect(() => {
+    dispatch(getProfil());
+  }, [dispatch]);
 
   function handleTabChange(event, value) {
     setSelectedTab(value);
@@ -38,7 +47,7 @@ function ProfileApp() {
         <div className="flex flex-col">
           <img
             className="h-160 lg:h-320 object-cover w-full"
-            src="assets/images/pages/profile/cover.jpg"
+            src="assets/images/pages/profile/1534431085364.png"
             alt="Profile Cover"
           />
 
@@ -127,4 +136,5 @@ function ProfileApp() {
   );
 }
 
-export default ProfileApp;
+// export default ProfileApp;
+export default withReducer("dataProfil", reducer)(ProfileApp);
